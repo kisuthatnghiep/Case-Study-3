@@ -129,7 +129,7 @@
             </div>
             <!-- Already Registered -->
             <div class="text-center w-100">
-              <p class="text-muted font-weight-bold">Already Registered? <a href="#" class="text-primary ml-2">Login</a></p>
+              <p class="text-muted font-weight-bold">Already Registered? <a href="http://localhost:8080/login/login.jsp" class="text-primary ml-2">Login</a></p>
             </div>
 
           </div>

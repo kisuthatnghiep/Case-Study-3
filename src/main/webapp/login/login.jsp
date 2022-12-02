@@ -40,7 +40,7 @@
             </div>
             <div class="other">
                 <button class="btn submits frgt-pass">Forgot Password</button>
-                <button class="btn submits sign-up">Sign Up
+                <button class="btn submits sign-up"><a href="http://localhost:8080/register/register.jsp" style="text-decoration: none;color:black">Sign Up</a>
                     <i class="fa fa-user-plus" aria-hidden="true"></i>
                 </button>
             </div>

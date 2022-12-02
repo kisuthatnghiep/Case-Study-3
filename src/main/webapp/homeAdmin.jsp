@@ -79,6 +79,7 @@
         </div>
     </div>
 </div>
+<p>Home admin</p>
 <div id="footer">
     <div id="footer-top">
         <div class="container">

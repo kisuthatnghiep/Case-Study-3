@@ -29,11 +29,13 @@
 <div id="center">
   <div class="container">
     <div class="row py-5 mt-4 align-items-center">
+
       <!-- Left side -->
       <div class="col-md-5 pr-lg-5 mb-5 mb-md-0">
         <img src="image/image-left-side.jpg" alt="image" class="img-fluid mb-5 d-none d-md-block">
         <h1 style="text-align: center">Create an Account</h1>
       </div>
+
       <!-- Registeration Form -->
       <div class="col-md-7 col-lg-6 ml-auto">
         <form method="post" action="${pageContext.request.contextPath}/register?action=create">
@@ -47,13 +49,15 @@
                 <input type="text" class="form-control" placeholder="Account" name="account">
               </div>
             </div>
+
             <!-- Password -->
             <div class="input-group col-lg-6 mb-4">
               <div class="input-group mb-2">
               <span class="input-group-text px-4 bg-white">
                  <i class="fa fa-lock text-muted"></i>
               </span>
-                <input type="password" class="form-control" placeholder="Password" name="password">
+                <input type="password" class="form-control" placeholder="Password" name="password"
+                       required="required">
               </div>
             </div>
 
@@ -63,7 +67,8 @@
               <span class="input-group-text px-4 bg-white">
                 <i class="fa fa-lock text-muted"></i>
               </span>
-                <input type="password" class="form-control" placeholder="Password Confirm" name="passwordConfirm">
+                <input type="password" class="form-control" placeholder="Password Confirm" name="passwordConfirm"
+                       required="required">
               </div>
             </div>
 
@@ -73,16 +78,19 @@
               <span class="input-group-text px-4 bg-white">
                 <i class="fa fa-address-card-o text-muted"></i>
               </span>
-                <input type="text" class="form-control" placeholder="Full Name" name="name">
+                <input type="text" class="form-control" placeholder="Full Name" name="name"
+                required="required">
               </div>
             </div>
+
             <!-- Email -->
             <div class="input-group col-lg-6 mb-4">
               <div class="input-group mb-3">
               <span class="input-group-text px-4 bg-white">
                 <i class="fa fa-envelope text-muted"></i>
               </span>
-                <input type="email" class="form-control" placeholder="Email Address" name="email">
+                <input type="email" class="form-control" placeholder="Email Address" name="email"
+                required="required">
               </div>
             </div>
             <!-- Role -->
@@ -104,7 +112,8 @@
               <span class="input-group-text px-4 bg-white">
                 <i class="fa fa-phone-square text-muted"></i>
               </span>
-                <input type="text" class="form-control" placeholder="Telephone" name="telephone">
+                <input type="text" class="form-control" placeholder="Telephone" name="telephone"
+                required="required">
               </div>
             </div>
             <!-- Submit Button -->

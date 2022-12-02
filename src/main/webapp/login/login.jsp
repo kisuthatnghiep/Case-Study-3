@@ -15,7 +15,7 @@
 </head>
 <body>
 <div class="overlay">
-    <form>
+    <form action="${pageContext.request.contextPath}/LogInServlet?action=login" method="post">
         <div class="con">
             <header class="head-form">
                 <h2>Log In</h2>

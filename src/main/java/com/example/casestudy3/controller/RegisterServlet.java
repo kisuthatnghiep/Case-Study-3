@@ -59,7 +59,6 @@ public class RegisterServlet extends HttpServlet {
             Singer newSinger = new Singer(name, account, password, email, telephone, 0, 1);
             registerDAO.createSinger(newSinger);
         }
-        RequestDispatcher requestDispatcher = request.getRequestDispatcher("register/register.jsp");
-        requestDispatcher.forward(request,response);
+        response.sendRedirect("http://localhost:8080/login/login.jsp");
     }
 }

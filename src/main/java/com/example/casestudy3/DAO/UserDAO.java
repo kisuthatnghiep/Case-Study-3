@@ -13,7 +13,7 @@ import java.util.List;
 
 public class UserDAO {
     private Connection connection;
-    private final String SELECT_SONG_BY_SEARCH = "select * from song where ;";
+    private final String SELECT_SONG_BY_SEARCH = "select * from song where  ";
     private final String SELECT_SONG_BY_PLAYLIST = "select s.id, s.name, s.description, s.price, s.singerId, s.status \n" +
                                                     "from song s join playlistdetail dtl on s.id = dtl.songId\n" +
                                                     "join playlist p on dtl.playlistId = p.id where p.name = ?;";
@@ -49,7 +49,7 @@ public class UserDAO {
         }
         return songs;
     }
-    //  tim kiem bai hat theo playlistd
+    //  tim kiem bai hat theo playlist
     public List<Song> songByPlayList(String search){
         List<Song> songs = new ArrayList<Song>();
         try (PreparedStatement preparedStatement = connection.prepareStatement(SELECT_SONG_BY_PLAYLIST)){
@@ -63,13 +63,17 @@ public class UserDAO {
         }
         return songs;
     }
+    // Tao album cua user
+    public void createPlayList(){
+
+    }
     private static void addListSong(List<Song> songs, ResultSet resultSet) throws SQLException {
-        Long id = resultSet.getLong("id");
+        long id = resultSet.getLong("id");
         String name = resultSet.getString("name");
         String link = resultSet.getString("link");
         String description = resultSet.getString("description");
         double price = resultSet.getDouble("price");
-        Long singerId =  resultSet.getLong("singerId");
+        long singerId =  resultSet.getLong("singerId");
         int status = resultSet.getInt("status");
         songs.add(new Song(id, name,link,description,price,singerId,status ));
     }

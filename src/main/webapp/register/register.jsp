@@ -6,6 +6,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <html>
 <head>
     <title>Title</title>
@@ -33,22 +34,19 @@
         <img src="image/image-left-side.jpg" alt="image" class="img-fluid mb-5 d-none d-md-block">
         <h1 style="text-align: center">Create an Account</h1>
       </div>
-
       <!-- Registeration Form -->
       <div class="col-md-7 col-lg-6 ml-auto">
-        <form action="#">
+        <form method="post" action="${pageContext.request.contextPath}/register?action=create">
           <div class="row">
-
-            <!-- User Name -->
+            <!-- Account -->
             <div class="input-group col-lg-6 mb-4">
               <div class="input-group mb-2">
               <span class="input-group-text px-4 bg-white">
                 <i class="fa fa-user text-muted"></i>
               </span>
-                <input type="text" class="form-control" placeholder="Username" name="username">
+                <input type="text" class="form-control" placeholder="Account" name="account">
               </div>
             </div>
-
             <!-- Password -->
             <div class="input-group col-lg-6 mb-4">
               <div class="input-group mb-2">
@@ -59,7 +57,7 @@
               </div>
             </div>
 
-            <!-- PasswordConfirm -->
+            <!-- Password Confirm -->
             <div class="input-group col-lg-6 mb-4">
               <div class="input-group mb-2">
               <span class="input-group-text px-4 bg-white">
@@ -75,7 +73,7 @@
               <span class="input-group-text px-4 bg-white">
                 <i class="fa fa-address-card-o text-muted"></i>
               </span>
-                <input type="text" class="form-control" placeholder="Full Name" name="fullname">
+                <input type="text" class="form-control" placeholder="Full Name" name="name">
               </div>
             </div>
             <!-- Email -->
@@ -106,14 +104,14 @@
               <span class="input-group-text px-4 bg-white">
                 <i class="fa fa-phone-square text-muted"></i>
               </span>
-                <input type="tel" class="form-control" placeholder="Telephone" name="telephone">
+                <input type="text" class="form-control" placeholder="Telephone" name="telephone">
               </div>
             </div>
             <!-- Submit Button -->
             <div class="form-group col-lg-4 mx-auto mb-0">
-              <a href="#" class="btn btn-primary btn-block py-2">
+              <button type="submit" class="btn btn-primary btn-block py-2">
                 <span class="font-weight-bold">Create your account</span>
-              </a>
+              </button>
             </div>
             <!-- Divider Text -->
             <div class="form-group col-lg-12 mx-auto d-flex align-items-center my-4">

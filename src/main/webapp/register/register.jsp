@@ -15,8 +15,10 @@
   <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <script src="//cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.js"></script>
 </head>
 <body>
+<%--header--%>
 <div id="header">
   <div class="container">
     <div class="row" style="padding: 10px;height: 75px">
@@ -29,11 +31,13 @@
 <div id="center">
   <div class="container">
     <div class="row py-5 mt-4 align-items-center">
+
       <!-- Left side -->
       <div class="col-md-5 pr-lg-5 mb-5 mb-md-0">
         <img src="image/image-left-side.jpg" alt="image" class="img-fluid mb-5 d-none d-md-block">
-        <h1 style="text-align: center">Create an Account</h1>
+        <h1 style="text-align: center">Tạo tài khoản</h1>
       </div>
+
       <!-- Registeration Form -->
       <div class="col-md-7 col-lg-6 ml-auto">
         <form method="post" action="${pageContext.request.contextPath}/register?action=create">
@@ -44,8 +48,13 @@
               <span class="input-group-text px-4 bg-white">
                 <i class="fa fa-user text-muted"></i>
               </span>
-                <input type="text" class="form-control" placeholder="Account" name="account">
+                <input type="text" class="form-control" placeholder="Tài khoản" name="account">
               </div>
+              <p class="text-danger m-0 p-0" style="font-size: 14px"><c:if test="${not empty messageAccount}">
+                <c:out value="${messageAccount}"/>
+                <c:set var="messageAccount" value="" scope="session"/>
+              </c:if>
+              </p>
             </div>
             <!-- Password -->
             <div class="input-group col-lg-6 mb-4">
@@ -53,7 +62,22 @@
               <span class="input-group-text px-4 bg-white">
                  <i class="fa fa-lock text-muted"></i>
               </span>
-                <input type="password" class="form-control" placeholder="Password" name="password">
+                <input id="password" type="password" class="form-control" placeholder="Mật khẩu"
+                        name="password">
+              </div>
+              <div>
+                <p class="text-danger m-0 p-0" style="font-size: 14px"><c:if test="${not empty messagePassword}">
+                  <c:out value="${messagePassword}"/>
+                  <c:set var="messagePassword" value="" scope="session"/>
+                </c:if>
+                </p>
+                <div id="messageWarningPassword">
+                  <p class="text-muted m-0 p-0">---Mật khẩu phải tuân theo định dạng sau---</p>
+                  <p class="text-muted my-0 p-0">1. Tối thiểu một kí tự viết hoa</p>
+                  <p class="text-muted my-0 p-0">2. Tối thiểu một kí tự số</p>
+                  <p class="text-muted my-0 p-0">3. Tối thiểu một kí tự đặc biệt</p>
+                  <p class="text-muted my-0 p-0">4. Giới hạn từ 6-8 kí tự</p>
+                </div>
               </div>
             </div>
 
@@ -63,8 +87,13 @@
               <span class="input-group-text px-4 bg-white">
                 <i class="fa fa-lock text-muted"></i>
               </span>
-                <input type="password" class="form-control" placeholder="Password Confirm" name="passwordConfirm">
+                <input type="password" class="form-control" placeholder="Xác nhận mật khẩu" name="passwordConfirm">
               </div>
+              <p class="text-danger m-0 p-0" style="font-size: 14px"><c:if test="${not empty messagePasswordConfirm}">
+                <c:out value="${messagePasswordConfirm}"/>
+                <c:set var="messagePasswordConfirm" value="" scope="session"/>
+              </c:if>
+              </p>
             </div>
 
             <!-- Full Name -->
@@ -73,17 +102,23 @@
               <span class="input-group-text px-4 bg-white">
                 <i class="fa fa-address-card-o text-muted"></i>
               </span>
-                <input type="text" class="form-control" placeholder="Full Name" name="name">
+                <input type="text" class="form-control" placeholder="Họ và tên" name="name">
               </div>
             </div>
+
             <!-- Email -->
             <div class="input-group col-lg-6 mb-4">
               <div class="input-group mb-3">
               <span class="input-group-text px-4 bg-white">
                 <i class="fa fa-envelope text-muted"></i>
               </span>
-                <input type="email" class="form-control" placeholder="Email Address" name="email">
+                <input type="text" class="form-control" placeholder="Địa chỉ email" name="email">
               </div>
+              <p class="text-danger m-0 p-0" style="font-size: 14px"><c:if test="${not empty messageEmail}">
+                <c:out value="${messageEmail}"/>
+                <c:set var="messageEmail" value="" scope="session"/>
+              </c:if>
+              </p>
             </div>
             <!-- Role -->
             <div class="input-group col-lg-6 mb-4">
@@ -92,10 +127,15 @@
                 <i class="fa fa-black-tie text-muted"></i>
               </span>
                 <select id="job" name="role" class="form-control custom-select bg-white border-left-0 border-md">
-                  <option value="">Choose your role</option>
-                  <option value="user">User</option>
-                  <option value="singer">Singer</option>
+                  <option value="">Chọn kiểu tài khoản </option>
+                  <option value="user">Người dùng</option>
+                  <option value="singer">Ca sĩ</option>
                 </select>
+                <p class="text-danger m-0 p-0" style="font-size: 14px"><c:if test="${not empty messageRole}">
+                  <c:out value="${messageRole}"/>
+                  <c:set var="messageRole" value="" scope="session"/>
+                </c:if>
+                </p>
               </div>
             </div>
             <!-- Telephone -->
@@ -104,13 +144,19 @@
               <span class="input-group-text px-4 bg-white">
                 <i class="fa fa-phone-square text-muted"></i>
               </span>
-                <input type="text" class="form-control" placeholder="Telephone" name="telephone">
+                <input type="text" class="form-control" placeholder="Số điện thoại" name="telephone">
               </div>
+              <p class="text-danger m-0 p-0" style="font-size: 14px"><c:if test="${not empty messageTelephone}">
+                <c:out value="${messageTelephone}"/>
+                <c:set var="messageTelephone" value="" scope="session"/>
+              </c:if>
+              </p>
             </div>
             <!-- Submit Button -->
             <div class="form-group col-lg-4 mx-auto mb-0">
-              <button type="submit" class="btn btn-primary btn-block py-2">
-                <span class="font-weight-bold">Create your account</span>
+              <button id="button-submit" type="submit" onsubmit="return submitForm(this);"
+                      class="btn btn-primary btn-block py-2">
+                <span class="font-weight-bold">Tạo tài khoản</span>
               </button>
             </div>
             <!-- Divider Text -->
@@ -120,16 +166,16 @@
             </div>
             <!-- Already Registered -->
             <div class="text-center w-100">
-              <p class="text-muted font-weight-bold">Already Registered? <a href="http://localhost:8080/login/login.jsp" class="text-primary ml-2">Login</a></p>
+              <p class="text-muted font-weight-bold">Đã có tài khoản?
+                <a href="http://localhost:8080/login/login.jsp" class="text-primary ml-2">Chuyển về trang đăng nhập</a></p>
             </div>
-
           </div>
         </form>
       </div>
     </div>
   </div>
 </div>
-
+<%--Footer--%>
 <div id="footer">
   <div id="footer-top">
     <div class="container">
@@ -203,3 +249,30 @@
 </div>
 </body>
 </html>
+<script>
+  let myInput = document.getElementById("password");
+  // When the user clicks on the password field, show the message box
+  myInput.onfocus = function() {
+    document.getElementById("messageWarningPassword").style.display = "block";
+  }
+
+  // When the user clicks outside of the password field, hide the message box
+  myInput.onblur = function() {
+    document.getElementById("messageWarningPassword").style.display = "none";
+  }
+
+  function submitForm(form) {
+    swal({
+      title: "Success!",
+      text: "Create successfully!",
+      icon: "success",
+      buttons: true,
+      dangerMode: true,
+    })
+            .then ((isOkay) => {
+      if (isOkay) {
+        form.submit();
+      }
+    });
+  }
+</script>

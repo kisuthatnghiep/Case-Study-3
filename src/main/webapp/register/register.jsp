@@ -73,9 +73,9 @@
                 </p>
                 <div id="messageWarningPassword">
                   <p class="text-muted m-0 p-0">---Mật khẩu phải tuân theo định dạng sau---</p>
-                  <p class="text-muted my-0 p-0">1. Một kí tự viết hoa</p>
-                  <p class="text-muted my-0 p-0">2. Một kí tự số</p>
-                  <p class="text-muted my-0 p-0">3. Một kí tự đặc biệt</p>
+                  <p class="text-muted my-0 p-0">1. Tối thiểu một kí tự viết hoa</p>
+                  <p class="text-muted my-0 p-0">2. Tối thiểu một kí tự số</p>
+                  <p class="text-muted my-0 p-0">3. Tối thiểu một kí tự đặc biệt</p>
                   <p class="text-muted my-0 p-0">4. Tối thiểu có 8 kí tự</p>
                 </div>
               </div>

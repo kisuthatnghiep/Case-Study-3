@@ -76,7 +76,7 @@
                   <p class="text-muted my-0 p-0">1. Tối thiểu một kí tự viết hoa</p>
                   <p class="text-muted my-0 p-0">2. Tối thiểu một kí tự số</p>
                   <p class="text-muted my-0 p-0">3. Tối thiểu một kí tự đặc biệt</p>
-                  <p class="text-muted my-0 p-0">4. Tối thiểu có 8 kí tự</p>
+                  <p class="text-muted my-0 p-0">4. Giới hạn từ 6-8 kí tự</p>
                 </div>
               </div>
             </div>

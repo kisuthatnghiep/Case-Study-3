@@ -12,7 +12,7 @@ public class Regex {
 
     private final String ACCOUNT_PATTERN = "^[_a-z0-9]{6,}$";
     private final String PASSWORD_PATTERN =
-            "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#&()–{}:;',?/*~$^+=<>]).{8,20}$";
+            "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#&()–{}:;',?/*~$^+=<>]).{6,8}$";
     private final String EMAIL_PATTERN =
             "^(([a-zA-Z0-9]+)([\\.\\-_]?)([a-zA-Z0-9]+)([\\.\\-_]?)([a-zA-Z0-9]+)?)(@)([a-zA-Z]+.[A-Za-z]+\\.?([a-zA-Z0-9]+)\\.?([a-zA-Z0-9]+))$";
     private final String TELEPHONE_PATTERN = "^[0-9]{10}$";

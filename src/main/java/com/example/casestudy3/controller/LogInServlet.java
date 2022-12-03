@@ -24,7 +24,15 @@ public class LogInServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+        String action = request.getParameter("action");
+        if (action == null) {
+            action = "";
+        }
+        switch (action) {
+            case "login":
+                goHome(request, response);
+                break;
+        }
     }
 
     private void goHome(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

@@ -46,8 +46,9 @@
                 </div>
             </div>
             <div class="col-md-3 vertical signIn">
-                <a id="avatar" href="">Đăng nhập</a>
+                <a id="avatar" href="" style = "margin-left: 60px"><c:out value="${singer.getName()}"/></a>
                 <img src="sourcePicture/keeng_ver5_02.png"/>
+                <a href="http://localhost:8080/login/login.jsp">Đăng xuất</a>
             </div>
         </div>
     </div>
@@ -79,7 +80,6 @@
         </div>
     </div>
 </div>
-<p>Home Singer</p>
 <div id="footer">
     <div id="footer-top">
         <div class="container">

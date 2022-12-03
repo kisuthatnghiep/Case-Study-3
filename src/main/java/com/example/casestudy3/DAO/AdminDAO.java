@@ -2,6 +2,7 @@ package com.example.casestudy3.DAO;
 
 import com.example.casestudy3.connection.MyConnection;
 import com.example.casestudy3.model.Singer;
+import com.example.casestudy3.model.Song;
 import com.example.casestudy3.model.User;
 
 import java.sql.Connection;
@@ -13,11 +14,13 @@ import java.util.List;
 
 public class AdminDAO {
     private Connection connection;
+    private UserDAO userDAO;
     private final String SELECT_ALL_USERS = "select * from users ;";
     private final String SELECT_ALL_SINGERS = "select * from singer ;";
 
     public AdminDAO() {
         connection = MyConnection.getConnection();
+        userDAO = new UserDAO();
     }
     public List<User> findAllUser() {
         List<User> users = new ArrayList<User>();
@@ -69,6 +72,14 @@ public class AdminDAO {
     }
     public Singer findByIdSinger(long id) {
         for (Singer s : findAllSinger()){
+            if (s.getId() == id){
+                return s;
+            }
+        }
+        return null;
+    }
+    public Song findByIdSong(long id) {
+        for (Song s : userDAO.findAllSong()){
             if (s.getId() == id){
                 return s;
             }

@@ -55,8 +55,16 @@
 <div id="content">
   <div id="slider">
     <div class="container" >
-      <h1>Detail User</h1>
-      <div class="col col-md-6" >
+
+      <div class="col col-md-4" style="float: left;">
+<%--      sidebar--%>
+      </div>
+
+
+      <div class="col col-md-2" style="float: left;margin-top: 50px">
+        <img style=" width: 150px;border-radius:50%;border-style: groove;" src="../../sourcePicture/avatardeatil.jpg" alt="avata loadding...." >
+      </div>
+      <div class="col col-md-6" style="float: left;margin-top: 30px">
         <table class="col col-md-12" id="table_detail">
           <tr>
             <th class="col col-md-1"></th>
@@ -83,11 +91,49 @@
             <th class="col col-md-2">Wallet</th>
             <td class="col col-md-7"><c:out value="${user.getWallet()}"/></td>
           </tr>
+          <tr>
+            <th class="col col-md-1"></th>
+            <th class="col col-md-2" colspan="2">
+              <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                Create Play List
+              </button>
+            </th>
+          </tr>
         </table>
       </div>
     </div>
   </div>
 </div>
+<%--modal createPlayList--%>
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <form action="${pageContext.request.contextPath}/UserServlet?action=createPlayList" method="post">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalLabel">Play List</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <table class="col-sm-8">
+            <tr>
+              <th class="col-sm-2"><label for="name">Name</label></th>
+              <th class="col-sm-6"><input type="text" id="name" name="name" style="font-size: 20px"></th>
+            </tr>
+            <tr>
+              <th class="col-sm-2"> <label for="avatarSRC">Avatar</label></th>
+              <th class="col-sm-6"><input type="text" id="avatarSRC" name="avatarSRC" style="font-size: 20px"></th>
+            </tr>
+          </table>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
+          <button type="submit" class="btn btn-primary">Create</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
 <div id="footer">
   <div id="footer-top">
     <div class="container">
@@ -112,16 +158,16 @@
         </div>
         <div class="col-md-7" style="padding: 60px">
           <div class="logo">
-            <img src="logo_mocha.png" alt="">
-            <img src="logo_onbox.png" alt="">
+            <img src="../../sourcePicture/logo_mocha.png" alt="">
+            <img src="../../sourcePicture/logo_onbox.png" alt="">
           </div>
           <div class="logo">
-            <img src="logo_onvideo.png" alt="">
-            <img src="logo_songkhoe.png" alt="">
+            <img src="../../sourcePicture/logo_onvideo.png" alt="">
+            <img src="../../sourcePicture/logo_songkhoe.png" alt="">
           </div>
           <div class="logo">
-            <img src="logo_tiin.png" alt="">
-            <img src="logo_viettelstudy.png" alt="">
+            <img src="../../sourcePicture/logo_tiin.png" alt="">
+            <img src="../../sourcePicture/logo_viettelstudy.png" alt="">
           </div>
         </div>
       </div>

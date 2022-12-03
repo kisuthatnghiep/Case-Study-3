@@ -10,8 +10,13 @@ import java.io.IOException;
 
 @WebServlet(name = "LogInServlet", value = "/LogInServlet")
 public class LogInServlet extends HttpServlet {
-    private LoginService loginService = new LoginService();
-    private AdminDAO adminDAO = new AdminDAO();
+    private LoginService loginService;
+    private AdminDAO adminDAO;
+    @Override
+    public void init()  {
+        adminDAO = new AdminDAO();
+        loginService = new LoginService();
+    }
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
@@ -37,4 +42,5 @@ public class LogInServlet extends HttpServlet {
         }
         requestDispatcher.forward(request,response);
     }
+
 }

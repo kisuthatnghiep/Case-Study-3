@@ -1,3 +1,5 @@
+function playAudio(name,mp3){
+
 const song = document.getElementById("song");
 const playBtn = document.querySelector(".player-inner");
 const nextBtn = document.querySelector(".play-forward");
@@ -14,22 +16,23 @@ let isPlaying = true;
 let indexSong = 0;
 let isRepeat = false;
 // const musics = ["holo.mp3", "summer.mp3", "spark.mp3", "home.mp3"];
-const musics = [
-    {
-        id: 1,
-        title: "Holo",
-        file: "spark.mp3",
-        image:
-            "https://images.unsplash.com/photo-1614624532983-4ce03382d63d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1931&q=80",
-    },
-    {
-        id: 2,
-        title: "Summer",
-        file: "summer.mp3",
-        image:
-            "https://images.unsplash.com/photo-1616763355548-1b606f439f86?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80",
-    },
-];
+    const musics = [
+        {
+            id: 1,
+            title: name,
+            file: mp3,
+            image:
+                "https://images.unsplash.com/photo-1614624532983-4ce03382d63d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1931&q=80",
+        },
+        {
+            id: 2,
+            title: "Summer",
+            file: "summer.mp3",
+            image:
+                "https://images.unsplash.com/photo-1616763355548-1b606f439f86?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80",
+        },
+    ];
+
 /**
  * Music
  * id: 1
@@ -130,3 +133,10 @@ function init(indexSong) {
 }
 displayTimer();
 init(indexSong);
+}
+playAudio("nang am xa dan","holo.mp3");
+
+let b = '';
+function referenceDelete(id) {
+    b = id
+}

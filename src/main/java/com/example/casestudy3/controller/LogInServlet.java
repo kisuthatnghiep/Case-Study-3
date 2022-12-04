@@ -39,7 +39,7 @@ public class LogInServlet extends HttpServlet {
             case 2:  requestDispatcher = request.getRequestDispatcher("homeUser.jsp");
                      request.setAttribute("user",adminDAO.findByIdUser(loginService.checkOnline()));
             break;
-            case 3:  requestDispatcher = request.getRequestDispatcher("homeSinger.jsp");
+            case 3:  requestDispatcher = request.getRequestDispatcher("SingerServlet");
                      request.setAttribute("singer",adminDAO.findByIdSinger(loginService.checkOnline()));
             break;
             default: requestDispatcher = request.getRequestDispatcher("login.jsp");

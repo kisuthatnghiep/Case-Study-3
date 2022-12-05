@@ -138,8 +138,8 @@
                 <c:forEach var="song" items="${listSong}">
                     <tr>
                         <td><c:out value="${song.getId()}"/></td>
-                        <td><button onclick="playAudio('${song.getName()}','${song.getLink()}')">aaa</button></td>
-                        <td><a href="audioPlayer/audioPlayer.jsp"><c:out value="${song.getName()}"/></a></td>
+<%--                        <td><button >aaa</button></td>--%>
+                        <td><a href="audioPlayer/audioPlayer.jsp" onclick="playAudio('${song.getName()}','${song.getLink()}')"><c:out value="${song.getName()}"/></a></td>
                         <td><c:out value="${song.getDescription()}"/></td>
                         <td><c:out value="${song.getPrice()}"/></td>
                         <td><a href="#"><i class="bi bi-trash" data-bs-toggle="modal" data-bs-target="#delete" onclick="referenceDelete(${song.getId()})"></i></a></td>

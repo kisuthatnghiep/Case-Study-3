@@ -11,8 +11,7 @@
 
 /* Start body rules */
 body {
-    background-image: linear-gradient(-225deg, #E3FDF5 0%, #FFE6FA 100%);
-    background-image: linear-gradient(to top, #a8edea 0%, #fed6e3 100%);
+    background-image: url("https://images.unsplash.com/photo-1514320291840-2e0a9bf2a9ae?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80");
     background-attachment: fixed;
     background-repeat: no-repeat;
 
@@ -42,7 +41,7 @@ form {
     margin: 2% auto;
     box-shadow: 0 9px 50px hsla(20, 67%, 75%, 0.31);
     padding: 2%;
-    background-image: linear-gradient(-225deg, #E3FDF5 50%, #FFE6FA 50%);
+    background-image: url("https://images.unsplash.com/photo-1514320291840-2e0a9bf2a9ae?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80");
 }
 /* form Container */
 form .con {
@@ -89,7 +88,7 @@ header p {letter-spacing: 0.05em;}
 
 /* Show/hide password Font Icon */
 #eye {
-    background: #fff;
+    background: #fefefe;
     color: #333;
 
     margin: 5.9px 0 0 0;

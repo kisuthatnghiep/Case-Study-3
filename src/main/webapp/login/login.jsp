@@ -10,12 +10,12 @@
 <html>
 <head>
     <title>Login</title>
-    <link rel="stylesheet" href="style-login.css">
+    <link rel="stylesheet" type="text/css" href="style-login.css">
     <link rel="stylesheet" href="bootstrap.login.js">
 </head>
 <body>
 <div class="overlay">
-    <form action="${pageContext.request.contextPath}/LogInServlet?action=login" method="post">
+    <form action="${pageContext.request.contextPath}/login?action=login" method="post">
         <div class="con">
             <header class="head-form">
                 <h2>Log In</h2>

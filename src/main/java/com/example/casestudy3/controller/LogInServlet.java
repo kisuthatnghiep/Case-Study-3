@@ -8,7 +8,7 @@ import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 import java.io.IOException;
 
-@WebServlet(name = "LogInServlet", value = "/LogInServlet")
+@WebServlet(name = "LogInServlet", value = "/login")
 public class LogInServlet extends HttpServlet {
     private LoginService loginService = new LoginService();
     private AdminDAO adminDAO = new AdminDAO();
@@ -22,6 +22,7 @@ public class LogInServlet extends HttpServlet {
             case "login":
                 goHome(request, response);
                 break;
+            default: response.sendRedirect("login/login.jsp");
         }
     }
 

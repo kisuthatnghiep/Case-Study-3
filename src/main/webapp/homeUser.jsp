@@ -80,7 +80,6 @@
         </div>
     </div>
 </div>
-
 <div id="footer">
     <div id="footer-top">
         <div class="container">

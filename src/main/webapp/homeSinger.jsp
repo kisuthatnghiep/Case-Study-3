@@ -55,7 +55,7 @@
 </div>
 <div id="content">
     <div id="slider">
-        <div class="container">
+        <div class="container" style="padding: 0">
             <div id="carouselExampleInterval" class="carousel slide" data-bs-ride="carousel">
                 <div class="carousel-inner">
                     <div class="carousel-item active" data-bs-interval="3000">
@@ -78,6 +78,68 @@
                 </button>
             </div>
         </div>
+    </div>
+    <div id="main-content">
+    <div class="container">
+    <div class="row">
+        <div id="information">
+            <h3>Thông tin cá nhân</h3>
+            <div class="col-md-4">
+                <img src="https://i1-giaitri.vnecdn.net/2021/02/06/118694894-229278411819922-4206-7181-8473-1612576192.jpg?w=680&h=0&q=100&dpr=1&fit=crop&s=YhjfrEmnY22wXxWFc_t5fw" style="width: 70%" alt="">
+            </div>
+            <div class="col-md-8">
+                <form class="row g-3" id="info-form">
+                    <div class="col-md-6">
+                        <fieldset disabled>
+                        <label for="input-account" class="form-label">Tài khoản</label>
+                        <input type="text" class="form-control" id="input-account" value="${singer.getAccount()}">
+                        </fieldset>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="inputPassword4" class="form-label">Mật khẩu</label>
+                        <input type="password" class="form-control" id="inputPassword4"  value="${singer.getPassword()}">
+                    </div>
+                    <div class="col-12">
+                        <label for="input-name" class="form-label">Họ và tên</label>
+                        <input type="text" class="form-control" id="input-name"  value="${singer.getName()}">
+                    </div>
+                    <div class="col-12">
+                        <label for="inputEmail" class="form-label">Email</label>
+                        <input type="email" class="form-control" id="inputEmail" value="${singer.getEmail()}">
+                    </div>
+                    <div class="col-md-6">
+                            <label for="inputPhone" class="form-label">Số điện thoại</label>
+                        <input type="text" class="form-control" id="inputPhone" value="${singer.getPhone()}">
+                    </div>
+                    <div class="col-md-6">
+                        <fieldset disabled>
+                        <div class="mb-3">
+                            <label for="disabledTextInput" class="form-label">Thu nhập</label>
+                            <input type="text" id="disabledTextInput" class="form-control">
+                        </div>
+                    </fieldset>
+                    </div>
+                    <div class="col-12">
+                        <button type="submit" class="btn btn-primary">Cập nhật</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div id="song-list">
+            <h3>Danh sách bài hát</h3>
+            <table class="table table-hover" style="margin-top:30px">
+                <tr>
+                    <th>STT</th>
+                    <th>Tên bài hát</th>
+                    <th>Lượt tải xuống</th>
+                    <th>Giá tiền</th>
+                    <th>Xóa</th>
+                </tr>
+
+            </table>
+        </div>
+    </div>
+    </div>
     </div>
 </div>
 <div id="footer">

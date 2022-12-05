@@ -72,9 +72,6 @@ ul.subnav{
 #footer{
     background-color: #858d90;
 }
-#content{
-    height: 800px;
-}
 .center{
     padding: 20px;
 
@@ -99,6 +96,27 @@ ul.subnav{
 }
 #slider{
     padding-top: 20px;
+    padding-bottom: 20px;
     position: relative;
+}
+#main-content{
+    background-color: rgb(235, 235, 235);
+}
+#song-list{
+    margin-top: 20px;
+    margin-bottom:20px;
+    background-color: white;
+}
+#information{
+    margin-top: 20px;
+    margin-bottom:20px;
+    background-color: white;
+}
+#main-content h3{
+    margin-top: 30px
+}
+#info-form{
+    margin-top: 20px;
+    margin-bottom: 20px;
 }
 

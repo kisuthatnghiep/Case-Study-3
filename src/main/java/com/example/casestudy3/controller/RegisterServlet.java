@@ -9,7 +9,6 @@ import javax.servlet.*;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 import java.io.IOException;
-import java.io.PrintWriter;
 
 @WebServlet(name = "UserServlet", value = "/register")
 public class RegisterServlet extends HttpServlet {
@@ -51,7 +50,6 @@ public class RegisterServlet extends HttpServlet {
     }
     private void create(HttpServletRequest request, HttpServletResponse response) throws IOException {
         HttpSession session = request.getSession();
-        PrintWriter out = response.getWriter();
         String account = request.getParameter("account");
         String password = request.getParameter("password");
         String passwordConfirm = request.getParameter("passwordConfirm");

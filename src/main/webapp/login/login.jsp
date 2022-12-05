@@ -26,23 +26,30 @@
                 <span class="input-item">
            <i class="fa fa-user-circle"></i>
          </span>
-                <input class="form-input" id="txt-input" type="text" name="account" placeholder="UserName" required>
+                <input class="form-input" id="txt-input" type="text" name="account" placeholder="UserName">
+                <p class="text-danger m-0 p-0" style="font-size: 14px"><c:if test="${not empty messageLoginAccount}">
+                    <c:out value="${messageLoginAccount}"/>
+                    <c:set var="messageLoginAccount" value="" scope="session"/>
+                </c:if>
+                </p>
                 <br>
                 <span class="input-item">
         <i class="fa fa-key"></i>
        </span>
-                <input class="form-input" type="password" placeholder="Password" id="pwd"  name="password" required>
-
-
-
+                <input class="form-input" type="password" placeholder="Password" id="pwd"  name="password">
+                <p class="text-danger m-0 p-0" style="font-size: 14px"><c:if test="${not empty messageLoginPassword}">
+                    <c:out value="${messageLoginPassword}"/>
+                    <c:set var="messageLoginPassword" value="" scope="session"/>
+                </c:if>
+                </p>
                 <br>
                 <button class="log-in"> Log In </button>
             </div>
             <div class="other">
                 <button class="btn submits frgt-pass">Forgot Password</button>
-                <button class="btn submits sign-up"><a href="http://localhost:8080/register/register.jsp" style="text-decoration: none;color:black">Sign Up</a>
-                    <i class="fa fa-user-plus" aria-hidden="true"></i>
-                </button>
+                <a href="http://localhost:8080/register/register.jsp" style="text-decoration: none;color:black"><button type="button" class="btn submits">Sign Up<i class="fa fa-user-plus" aria-hidden="true"></i></button></a>
+
+
             </div>
         </div>
     </form>

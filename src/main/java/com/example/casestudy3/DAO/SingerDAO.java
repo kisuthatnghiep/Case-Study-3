@@ -18,7 +18,7 @@ public class SingerDAO {
             "values(?,?,?,?,?,?);";
     private final String DELETE_SONG = "update song set status = 0 where id = ?;";
 
-    private final String LIST_SINGER_SONG = "select song.id, song.name, song.price, song.description from song where status = 1 and singerId = ?;";
+    private final String LIST_SINGER_SONG = "select song.id, song.name,song.link, song.price, song.description from song where status = 1 and singerId = ?;";
     private final String FIND_ALL_SINGER = "select * from singer;";
     public SingerDAO() {
         connection =  MyConnection.getConnection();
@@ -55,9 +55,10 @@ public class SingerDAO {
             while (resultSet.next()){
                 long id = resultSet.getLong("id");
                 String name = resultSet.getString("name");
+                String link = resultSet.getString("link");
                 String description = resultSet.getString("description");
                 double price = resultSet.getDouble("price");
-                songs.add(new Song(id, name, description, price));
+                songs.add(new Song(id, name,link, description, price));
             }
         }catch (SQLException e){
             e.printStackTrace();

@@ -1,5 +1,6 @@
 package com.example.casestudy3.controller;
 
+import com.example.casestudy3.DAO.AdminDAO;
 import com.example.casestudy3.service.user.UserService;
 
 import javax.servlet.*;
@@ -11,9 +12,11 @@ import java.sql.SQLException;
 @WebServlet(name = "UserServlet", value = "/UserServlet")
 public class UserServlet extends HttpServlet {
     private UserService userService;
+    private AdminDAO adminDAO;
     @Override
     public void init()  {
         userService = new UserService();
+        adminDAO = new AdminDAO();
     }
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -53,6 +56,7 @@ public class UserServlet extends HttpServlet {
                     throw new RuntimeException(e);
                 }
                 break;
+            default: homeUser(request,response);
         }
     }
     private void createPlayList(HttpServletRequest request,HttpServletResponse response) throws IOException {
@@ -78,16 +82,18 @@ public class UserServlet extends HttpServlet {
         }
     }
     private void searchSong(HttpServletRequest request,HttpServletResponse response) throws IOException, ServletException {
-        RequestDispatcher requestDispatcher = request.getRequestDispatcher("homeUser");
-        request.setAttribute("listSongByName", userService.searchSongByName(request));
-        request.setAttribute("listSongBySinger",  userService.searchSongBySinger(request));
-        request.setAttribute("listSongByPlayList",  userService.searchSongByPlayList(request));
+        RequestDispatcher requestDispatcher = request.getRequestDispatcher("/homeUser.jsp");
+        request.setAttribute("listSong", userService.searchSongByName(request));
+        request.setAttribute("listSong",  userService.searchSongBySinger(request));
+        request.setAttribute("listSong",  userService.searchSongByPlayList(request));
         requestDispatcher.forward(request, response);
     }
     private void homeUser(HttpServletRequest request,HttpServletResponse response) throws IOException, ServletException {
-        RequestDispatcher requestDispatcher = request.getRequestDispatcher("homeUser");
+        RequestDispatcher requestDispatcher = request.getRequestDispatcher("homeUser.jsp");
         request.setAttribute("listSong", userService.findAllSong());
         request.setAttribute("user", userService.detailUser(request));
+        request.setAttribute("listSinger",adminDAO.findAllSinger());
+        request.setAttribute("listPlayList", userService.findPlaylistUser());
         requestDispatcher.forward(request, response);
     }
     private void deleteSongUser(HttpServletRequest request,HttpServletResponse response) throws IOException {

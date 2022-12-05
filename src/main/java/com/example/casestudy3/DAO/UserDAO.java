@@ -14,17 +14,14 @@ import java.util.List;
 
 public class UserDAO {
     private Connection connection;
-    private final String SELECT_SONG_BY_SEARCH ="select s.id as id, s.name  as name, s.description as description," +
-                                                " s.price as price, s.singerId as singerId, s.status as status \n" +
-                                                "from song s join singer on s.singerId = singer.id\n" +
-                                                "where p.name = ? and singer.status = 1;";
-    private final String SELECT_SONG_BY_PLAYLIST = "select s.id as id, s.name  as name, s.description as description," +
+    private final String SELECT_SONG = "select s.id as id, s.name  as name, s.link as link, s.description as description," +
                                                     " s.price as price, s.singerId as singerId, s.status as status \n" +
                                                     "from singer join song s on singer.id = s.singerId\n" +
                                                     "join playlistdetail dtl on s.id = dtl.songId\n" +
                                                     "join playlist p on dtl.playlistId = p.id " +
-                                                    "where p.name = ? and singer.status = 1;";
-    private final String SELECT_ALL_SONGS = "select s.id as id, s.name  as name, s.description as description," +
+                                                    "where ( p.name = ? or singer.name = ? or s.name like concat(%,?,%))" +
+                                                    "and singer.status = 1;";
+    private final String SELECT_ALL_SONGS = "select s.id as id, s.name  as name, s.link as link, s.description as description," +
                                             " s.price as price, s.singerId as singerId, s.status as status \n" +
                                             "from song s join singer on s.singerId = singer.id\n" +
                                             "where singer.status = 1;";
@@ -35,7 +32,7 @@ public class UserDAO {
     private final String SELECT_USER_PLAYLIST = "select p.id, p.name, p.date \n" +
                                                 "from users u join playlist p on u.id = p.userId\n" +
                                                 "where u.id = ? ;";
-    private final String SELECT_SONG_BY_USER = "select s.id as id, s.name  as name, s.description as description," +
+    private final String SELECT_SONG_BY_USER = "select s.id as id, s.name  as name, s.link as link, s.description as description," +
                                                 " s.price as price, s.singerId as singerId, s.status as status \n" +
                                                 "from users u join playlist p on u.id = p.userId\n" +
                                                 "join playlistdetail dtl on p.id = dtl.playlistId\n" +
@@ -67,36 +64,36 @@ public class UserDAO {
     }
 
     // tim kiem bai hat theo ten, ca si
-    public List<Song> findSearchSongByName(String search){
-        List<Song> songs = new ArrayList<Song>();
-        try (PreparedStatement preparedStatement =
-                     connection.prepareStatement(SELECT_SONG_BY_SEARCH+" name like "+"%"+search+"% ;")){
-            ResultSet resultSet = preparedStatement.executeQuery();
-            while (resultSet.next()){
-                addListSong(songs, resultSet);
-            }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-        return songs;
-    }
-    public List<Song> findSearchSongBySinger(long singerId){
-        List<Song> songs = new ArrayList<Song>();
-        try (PreparedStatement preparedStatement =
-                     connection.prepareStatement(SELECT_SONG_BY_SEARCH+" singerId = "+singerId+" ;")){
-            ResultSet resultSet = preparedStatement.executeQuery();
-            while (resultSet.next()){
-                addListSong(songs, resultSet);
-            }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-        return songs;
-    }
+//    public List<Song> findSearchSongByName(String search){
+//        List<Song> songs = new ArrayList<Song>();
+//        try (PreparedStatement preparedStatement =
+//                     connection.prepareStatement(SELECT_SONG_BY_SEARCH+" name like "+"%"+search+"% ;")){
+//            ResultSet resultSet = preparedStatement.executeQuery();
+//            while (resultSet.next()){
+//                addListSong(songs, resultSet);
+//            }
+//        } catch (SQLException e) {
+//            throw new RuntimeException(e);
+//        }
+//        return songs;
+//    }
+//    public List<Song> findSearchSongBySinger(long singerId){
+//        List<Song> songs = new ArrayList<Song>();
+//        try (PreparedStatement preparedStatement =
+//                     connection.prepareStatement(SELECT_SONG_BY_SEARCH+" singerId = "+singerId+" ;")){
+//            ResultSet resultSet = preparedStatement.executeQuery();
+//            while (resultSet.next()){
+//                addListSong(songs, resultSet);
+//            }
+//        } catch (SQLException e) {
+//            throw new RuntimeException(e);
+//        }
+//        return songs;
+//    }
     //  tim kiem bai hat theo playlist
     public List<Song> songByPlayList(String search){
         List<Song> songs = new ArrayList<Song>();
-        try (PreparedStatement preparedStatement = connection.prepareStatement(SELECT_SONG_BY_PLAYLIST)){
+        try (PreparedStatement preparedStatement = connection.prepareStatement(SELECT_SONG)){
             preparedStatement.setString(1,search);
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()){

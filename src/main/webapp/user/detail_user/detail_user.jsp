@@ -11,17 +11,17 @@
 <html>
 <head>
   <title>Title</title>
-  <link rel="stylesheet" href="${pageContext.request.contextPath}/asset/bootstrap/css/bootstrap.min.css">
-  <script src=${pageContext.request.contextPath}/asset/bootstrap/js/bootstrap.js"></script>
+  <link rel="stylesheet" href="/asset/bootstrap/css/bootstrap.min.css">
+  <script src="/asset/bootstrap/js/bootstrap.js"></script>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css">
-  <link rel="stylesheet" href="${pageContext.request.contextPath}/user/detail_user/detail_user">
+  <link rel="stylesheet" href="/user/detail_user/detail_user.css">
 </head>
 <body>
 <div id="header">
   <div class="container">
     <div class="row" style="padding: 10px;height: 75px">
       <div class="col-md-1 vertical">
-        <a href=""><img src="../../sourcePicture/logo_keeng.png" style="margin-top: 6px"/></a>
+        <a href="http://localhost:8080/login?action=goHomeUser"><img src="../../sourcePicture/logo_keeng.png" style="margin-top: 6px"/></a>
       </div>
       <div class="col-md-2 vertical" id="menu">
         <ul id="nav">

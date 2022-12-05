@@ -34,16 +34,18 @@ public class LogInServlet extends HttpServlet {
         RequestDispatcher requestDispatcher ;
         switch (loginService.logIn(request)){
             case 1:  requestDispatcher = request.getRequestDispatcher("homeAdmin.jsp");
-
+                requestDispatcher.forward(request,response);
             break;
             case 2:  requestDispatcher = request.getRequestDispatcher("homeUser.jsp");
                      request.setAttribute("user",adminDAO.findByIdUser(loginService.checkOnline()));
+                requestDispatcher.forward(request,response);
             break;
             case 3:  requestDispatcher = request.getRequestDispatcher("homeSinger.jsp");
                      request.setAttribute("singer",adminDAO.findByIdSinger(loginService.checkOnline()));
+                requestDispatcher.forward(request,response);
             break;
-            default: requestDispatcher = request.getRequestDispatcher("login.jsp");
+            default: response.sendRedirect("http://localhost:8080/login/login.jsp");
         }
-        requestDispatcher.forward(request,response);
+
     }
 }

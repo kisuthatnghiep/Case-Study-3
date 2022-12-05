@@ -11,10 +11,10 @@
 <html>
 <head>
   <title>Title</title>
-  <link rel="stylesheet" href="../../asset/bootstrap/css/bootstrap.min.css">
-  <script src="../../asset/bootstrap/js/bootstrap.js"></script>
-  <link rel="stylesheet" href="detail_user.css">
+  <link rel="stylesheet" href="${pageContext.request.contextPath}/asset/bootstrap/css/bootstrap.min.css">
+  <script src=${pageContext.request.contextPath}/asset/bootstrap/js/bootstrap.js"></script>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css">
+  <link rel="stylesheet" href="${pageContext.request.contextPath}/user/detail_user/detail_user">
 </head>
 <body>
 <div id="header">

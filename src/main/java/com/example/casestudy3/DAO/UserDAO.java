@@ -32,7 +32,7 @@ public class UserDAO {
     private final String USER_BY_SONG = "update users set wallet = ? where id = ?;";
     private final String SINGER_SELL_SONG = "update singer set income = ? where id = ?;";
     private final String INSERT_PLAYLISTDETAIL = "insert into playlistdetail (playlistId,songID,date) value ( ? , ? , ? );";
-    private final String SELECT_USER_PLAYLIST = "select p.id, p.name, p.avatar, p.date \n" +
+    private final String SELECT_USER_PLAYLIST = "select p.id, p.name, p.date \n" +
                                                 "from users u join playlist p on u.id = p.userId\n" +
                                                 "where u.id = ? ;";
     private final String SELECT_SONG_BY_USER = "select s.id as id, s.name  as name, s.description as description," +

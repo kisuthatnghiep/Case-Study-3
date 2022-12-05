@@ -9,8 +9,9 @@ import javax.servlet.*;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 import java.io.IOException;
+import java.io.PrintWriter;
 
-@WebServlet(name = "UserServlet", value = "/register")
+@WebServlet(name = "RegisterServlet", value = "/register")
 public class RegisterServlet extends HttpServlet {
     private RegisterDAO registerDAO;
     private AdminDAO adminDAO;
@@ -50,6 +51,7 @@ public class RegisterServlet extends HttpServlet {
     }
     private void create(HttpServletRequest request, HttpServletResponse response) throws IOException {
         HttpSession session = request.getSession();
+        PrintWriter out = response.getWriter();
         String account = request.getParameter("account");
         String password = request.getParameter("password");
         String passwordConfirm = request.getParameter("passwordConfirm");
@@ -64,10 +66,10 @@ public class RegisterServlet extends HttpServlet {
             session.setAttribute("messageAccount", "**Tài khoản đã tồn tại");
             response.sendRedirect("http://localhost:8080/register/register.jsp");
         } else if (account.equals("admin")) {
-            session.setAttribute("messageAccount", "**Tài khoản đã tồn tại");
+            session.setAttribute("messageAccount", "**Tài khoản không được đặt tên là admin");
             response.sendRedirect("http://localhost:8080/register/register.jsp");
         } else if (!regex.validateAccount(account)) {
-            session.setAttribute("messageAccount", "**Tài khoản phải có ít nhất 6 kí tự !");
+            session.setAttribute("messageAccount", "**Tài khoản phải có ít nhất 6 kí tự");
             response.sendRedirect("http://localhost:8080/register/register.jsp");
         } else if (!regex.validatePassword(password)) {
             session.setAttribute("messagePassword", "**Sai định dạng mật khẩu. Xin mời nhập lại");

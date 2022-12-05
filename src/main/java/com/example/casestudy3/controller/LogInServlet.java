@@ -2,6 +2,7 @@ package com.example.casestudy3.controller;
 
 import com.example.casestudy3.DAO.AdminDAO;
 import com.example.casestudy3.service.login.LoginService;
+import com.example.casestudy3.service.user.UserService;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
@@ -10,16 +11,20 @@ import java.io.IOException;
 
 @WebServlet(name = "LogInServlet", value = "/LogInServlet")
 public class LogInServlet extends HttpServlet {
-    private LoginService loginService;
-    private AdminDAO adminDAO;
-    @Override
-    public void init()  {
-        adminDAO = new AdminDAO();
-        loginService = new LoginService();
-    }
+    private LoginService loginService = new LoginService();
+    private AdminDAO adminDAO = new AdminDAO();
+    private UserService userService = new UserService();
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+        String action = request.getParameter("action");
+        if (action == null) {
+            action = "";
+        }
+        switch (action) {
+            case "login":
+                goHome(request, response);
+                break;
+        }
     }
 
     @Override
@@ -39,16 +44,19 @@ public class LogInServlet extends HttpServlet {
         RequestDispatcher requestDispatcher ;
         switch (loginService.logIn(request)){
             case 1:  requestDispatcher = request.getRequestDispatcher("homeAdmin.jsp");
-                     break;
+
+            break;
             case 2:  requestDispatcher = request.getRequestDispatcher("homeUser.jsp");
                      request.setAttribute("user",adminDAO.findByIdUser(loginService.checkOnline()));
-                     break;
-            case 3:  requestDispatcher = request.getRequestDispatcher("homeSinger.jsp");
+                     request.setAttribute("listSong",userService.findAllSong());
+                     request.setAttribute("listSinger",adminDAO.findAllSinger());
+                     request.setAttribute("listPlayList",userService.findPlaylistUser());
+            break;
+            case 3:  requestDispatcher = request.getRequestDispatcher("SingerServlet");
                      request.setAttribute("singer",adminDAO.findByIdSinger(loginService.checkOnline()));
-                     break;
+            break;
             default: requestDispatcher = request.getRequestDispatcher("login.jsp");
         }
         requestDispatcher.forward(request,response);
     }
-
 }

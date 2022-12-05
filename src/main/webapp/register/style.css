@@ -10,6 +10,9 @@ li{
 a{
     text-decoration: none;
 }
+a:hover{
+    text-decoration: underline;
+}
 .ms-n5 {
     margin-left: -40px;
 }

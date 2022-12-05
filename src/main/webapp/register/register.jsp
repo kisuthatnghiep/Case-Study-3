@@ -12,10 +12,9 @@
     <title>Title</title>
   <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
   <script src="bootstrap/js/bootstrap.js"></script>
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" type="text/css" href="style.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-  <script src="//cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.js"></script>
 </head>
 <body>
 <%--header--%>
@@ -23,7 +22,7 @@
   <div class="container">
     <div class="row" style="padding: 10px;height: 75px">
       <div class="col-md-1 vertical">
-        <a href=""><img src="image/logo_keeng.png" style="margin-top: 6px"/></a>
+        <a href=""><img src="image/logo_keeng.png" style="margin-top: 6px" alt="image"/></a>
       </div>
     </div>
   </div>
@@ -45,10 +44,10 @@
             <!-- Account -->
             <div class="input-group col-lg-6 mb-4">
               <div class="input-group mb-2">
-              <span class="input-group-text px-4 bg-white">
+              <span class="input-group-text px-4 bg-white justify-content-center" style="width: 70px">
                 <i class="fa fa-user text-muted"></i>
               </span>
-                <input type="text" class="form-control" placeholder="Tài khoản" name="account">
+                <input type="text" class="form-control" placeholder="Tài khoản (tối thiểu 6 kí tự)" name="account">
               </div>
               <p class="text-danger m-0 p-0" style="font-size: 14px"><c:if test="${not empty messageAccount}">
                 <c:out value="${messageAccount}"/>
@@ -59,7 +58,7 @@
             <!-- Password -->
             <div class="input-group col-lg-6 mb-4">
               <div class="input-group mb-2">
-              <span class="input-group-text px-4 bg-white">
+              <span class="input-group-text px-4 bg-white justify-content-center" style="width: 70px">
                  <i class="fa fa-lock text-muted"></i>
               </span>
                 <input id="password" type="password" class="form-control" placeholder="Mật khẩu"
@@ -84,7 +83,7 @@
             <!-- Password Confirm -->
             <div class="input-group col-lg-6 mb-4">
               <div class="input-group mb-2">
-              <span class="input-group-text px-4 bg-white">
+              <span class="input-group-text px-4 bg-white justify-content-center" style="width: 70px">
                 <i class="fa fa-lock text-muted"></i>
               </span>
                 <input type="password" class="form-control" placeholder="Xác nhận mật khẩu" name="passwordConfirm">
@@ -99,7 +98,7 @@
             <!-- Full Name -->
             <div class="input-group col-lg-6 mb-4">
               <div class="input-group mb-3">
-              <span class="input-group-text px-4 bg-white">
+              <span class="input-group-text px-4 bg-white justify-content-center" style="width: 70px">
                 <i class="fa fa-address-card-o text-muted"></i>
               </span>
                 <input type="text" class="form-control" placeholder="Họ và tên" name="name">
@@ -109,7 +108,7 @@
             <!-- Email -->
             <div class="input-group col-lg-6 mb-4">
               <div class="input-group mb-3">
-              <span class="input-group-text px-4 bg-white">
+              <span class="input-group-text px-4 bg-white justify-content-center" style="width: 70px">
                 <i class="fa fa-envelope text-muted"></i>
               </span>
                 <input type="text" class="form-control" placeholder="Địa chỉ email" name="email">
@@ -123,7 +122,7 @@
             <!-- Role -->
             <div class="input-group col-lg-6 mb-4">
               <div class="input-group mb-3">
-              <span class="input-group-text px-4 bg-white">
+              <span class="input-group-text px-4 bg-white justify-content-center" style="width: 70px">
                 <i class="fa fa-black-tie text-muted"></i>
               </span>
                 <select id="job" name="role" class="form-control custom-select bg-white border-left-0 border-md">
@@ -131,17 +130,17 @@
                   <option value="user">Người dùng</option>
                   <option value="singer">Ca sĩ</option>
                 </select>
-                <p class="text-danger m-0 p-0" style="font-size: 14px"><c:if test="${not empty messageRole}">
-                  <c:out value="${messageRole}"/>
-                  <c:set var="messageRole" value="" scope="session"/>
-                </c:if>
-                </p>
               </div>
+              <p class="text-danger m-0 p-0" style="font-size: 14px"><c:if test="${not empty messageRole}">
+                <c:out value="${messageRole}"/>
+                <c:set var="messageRole" value="" scope="session"/>
+              </c:if>
+              </p>
             </div>
             <!-- Telephone -->
             <div class="input-group col-lg-6 mb-4">
               <div class="input-group mb-3">
-              <span class="input-group-text px-4 bg-white">
+              <span class="input-group-text px-4 bg-white justify-content-center" style="width: 70px">
                 <i class="fa fa-phone-square text-muted"></i>
               </span>
                 <input type="text" class="form-control" placeholder="Số điện thoại" name="telephone">
@@ -154,8 +153,8 @@
             </div>
             <!-- Submit Button -->
             <div class="form-group col-lg-4 mx-auto mb-0">
-              <button id="button-submit" type="submit" onsubmit="return submitForm(this);"
-                      class="btn btn-primary btn-block py-2">
+              <button id="button-submit" type="submit"
+                      class="btn btn-primary btn-block py-2" onsubmit="submitForm()">
                 <span class="font-weight-bold">Tạo tài khoản</span>
               </button>
             </div>
@@ -167,7 +166,8 @@
             <!-- Already Registered -->
             <div class="text-center w-100">
               <p class="text-muted font-weight-bold">Đã có tài khoản?
-                <a href="http://localhost:8080/login/login.jsp" class="text-primary ml-2">Chuyển về trang đăng nhập</a></p>
+                <a href="http://localhost:8080/login/login.jsp"
+                   class="text-primary ml-2">Chuyển về trang đăng nhập</a></p>
             </div>
           </div>
         </form>
@@ -215,10 +215,10 @@
       </div>
     </div>
   </div>
-  <hr style="color: white">
+  <hr style="color: white; margin: 0">
   <div id="footer-bottom">
     <div class="container">
-      <div class="row" style="padding-top: 30px">
+      <div class="row" style="padding-top: 30px; padding-bottom: 30px">
         <div class="col-md-1" style="vertical-align: bottom">
           <img src="https://musicmd1fr.keeng.net/bucket-image-keeng/web_v5//images/logo_keeng_footer.png" width="200%">
           <img src="https://musicmd1fr.keeng.net/bucket-image-keeng/web_v5//images/gov-dathongbao.png" width="230" height="86">
@@ -250,29 +250,14 @@
 </body>
 </html>
 <script>
+  // Password format hidden show
   let myInput = document.getElementById("password");
   // When the user clicks on the password field, show the message box
   myInput.onfocus = function() {
     document.getElementById("messageWarningPassword").style.display = "block";
   }
-
   // When the user clicks outside of the password field, hide the message box
   myInput.onblur = function() {
     document.getElementById("messageWarningPassword").style.display = "none";
-  }
-
-  function submitForm(form) {
-    swal({
-      title: "Success!",
-      text: "Create successfully!",
-      icon: "success",
-      buttons: true,
-      dangerMode: true,
-    })
-            .then ((isOkay) => {
-      if (isOkay) {
-        form.submit();
-      }
-    });
   }
 </script>

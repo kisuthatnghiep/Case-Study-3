@@ -46,7 +46,7 @@
                 </div>
             </div>
             <div class="col-md-3 vertical">
-                <a id="avatar" href="" style = "margin-left: 60px"><c:out value="${user.getName()}"/></a>
+                <a id="avatar" href="UserServlet?action=detailUser" style = "margin-left: 60px"><c:out value="${user.getName()}"/></a>
                 <img src="sourcePicture/keeng_ver5_02.png"/>
                 <a href="http://localhost:8080/login/login.jsp">Đăng xuất</a>
             </div>
@@ -79,8 +79,79 @@
             </div>
         </div>
     </div>
-</div>
+    <div id="main-content">
+        <div class="container">
+            <div class="row">
+                <div id="information">
+                    <table class="table table-hover" style="margin-top:30px">
+                        <tr>
+                            <th>Tên bài hát</th>
+                            <th>Ca sĩ</th>
+                            <th>Mô tả</th>
+                            <th>Giá tiền</th>
+                            <th>action</th>
+                        </tr>
+                        <c:forEach var="song" items="${listSong}">
+                            <c:if test="${song.getStatus() == 1}">
+                                <tr>
+                                    <td>><c:out value="${song.getName()}"/></td>
+                                    <td><c:out value="${listSinger.get(song.getSingerId()).getName()}"/></td>
+                                    <td><c:out value="${song.getDescription()}"/></td>
+                                    <td><c:out value="${song.getPrice()}"/></td>
+                                    <td><a href="#"><i></i></a></td>
+                                </tr>
+                            </c:if>
+                            <c:if test="${song.getStatus() == -1}">
+                                <tr>
+                                    <td>><c:out value="${song.getName()}"/></td>
+                                    <td><c:out value="${listSinger.get(song.getSingerId()).getName()}"/></td>
+                                    <td><c:out value="${song.getDescription()}"/></td>
+                                    <td><c:out value="${song.getPrice()}"/></td>
+                                    <td><c:out value="Đã mua"/></td>
+                                </tr>
+                            </c:if>
+                        </c:forEach>
+                    </table>
+                </div>
+                <div id="song-list">
+                    <table class="table table-hover" style="margin-top:30px; text-align: center">
+                        <tr>
+                            <th class="col-sm-3">Tên danh sách bài hát</th>
+                            <th class="col-sm-2">Ngày tạo</th>
+                            <th class="col-sm-7">Danh sách bài hát</th>
+                        </tr>
+                        <c:forEach var="p" items="${listPlayList}">
+                            <tr>
+                                <td class="col-sm-3"><c:out value="${p.getName()}"/></td>
+                                <td class="col-sm-2"><c:out value="${p.getDate()}"/></td>
+                                <td class="col-sm-7">
+                                    <table class="table table-hover">
+                                        <tr>
+                                            <th class="col-sm-5">Tên bài hát</th>
+                                            <th class="col-sm-4">Ca sĩ</th>
+                                            <th class="col-sm-3">action</th>
+                                        </tr>
+                                        <c:forEach items="${listSong}" var="s">
+                                            <tr>
+                                                <td class="col-sm-3"><c:out value="${s.getName()}"/></td>
+                                                <td class="col-sm-3"><c:out value="${listSinger.get(s.getSingerId()).getName()}"/></td>
+                                                <td></td>
+                                            </tr>
+                                        </c:forEach>
+                                    </table>
+                                </td>
+                            </tr>
+                        </c:forEach>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
 
+
+
+
+</div>
 <div id="footer">
     <div id="footer-top">
         <div class="container">

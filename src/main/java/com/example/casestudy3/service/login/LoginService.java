@@ -6,7 +6,7 @@ import com.example.casestudy3.model.User;
 
 import javax.servlet.http.HttpServletRequest;;
 
-public class LoginService<E> {
+public class LoginService {
     private static long userID;
     private AdminDAO adminDAO;
 
@@ -20,7 +20,7 @@ public class LoginService<E> {
     public int logIn(HttpServletRequest request){
         String account = request.getParameter("account");
         String password = request.getParameter("password");
-        if (password.equals("admin") && password.equals("admin")){
+        if (account.equals("admin") && password.equals("admin")){
             return  1;
         }else {
             for (User user : adminDAO.findAllUser()) {

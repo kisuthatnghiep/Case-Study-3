@@ -1,11 +1,10 @@
 package com.example.casestudy3.controller;
 
-import com.example.casestudy3.model.User;
 import com.example.casestudy3.service.user.UserService;
 
 import javax.servlet.*;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
-import javax.servlet.annotation.*;
 import java.io.IOException;
 import java.sql.SQLException;
 
@@ -67,6 +66,7 @@ public class UserServlet extends HttpServlet {
         request.setAttribute("listPlayListUser",userService.findPlaylistUser());
         request.setAttribute("sumPrice",userService.sumPriceBuySongUser());
         requestDispatcher.forward(request, response);
+
     }
     private void userBuySong(HttpServletRequest request,HttpServletResponse response) throws IOException, ServletException {
         if (userService.buySong(request)){

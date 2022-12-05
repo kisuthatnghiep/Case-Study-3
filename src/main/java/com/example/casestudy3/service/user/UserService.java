@@ -6,6 +6,7 @@ import com.example.casestudy3.controller.LogInServlet;
 import com.example.casestudy3.controller.UserServlet;
 import com.example.casestudy3.model.*;
 import com.example.casestudy3.service.login.LoginService;
+import com.example.casestudy3.service.singerService.SingerService;
 
 import javax.servlet.http.HttpServletRequest;
 import java.sql.SQLException;
@@ -13,6 +14,7 @@ import java.time.LocalDate;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class UserService {
     private UserDAO userDAO;
@@ -103,13 +105,31 @@ public class UserService {
     public List<Playlist> findPlaylistUser(){
         return userDAO.playlistUser(loginService.checkOnline());
     }
-    public boolean recharge(HttpServletRequest request) {
+    public void recharge(HttpServletRequest request) {
         try {
             double wallet = Double.parseDouble(request.getParameter("wallet"));
-            return userDAO.recharge(loginService.checkOnline(), wallet);
+             userDAO.recharge(loginService.checkOnline(), wallet);
         }catch (Exception e) {
             e.printStackTrace();
         }
-        return false;
+
     }
+    public Map<Long, Singer> mapListSinger(){
+        return userDAO.mapListSinger();
+    }
+//    public List<Singer> listSinger(){
+//        List<Singer> singers = new ArrayList<>();
+//        for (Song song: findAllSong()){
+//            singers.add(findSingerById(song.getSingerId()));
+//        }
+//        return singers;
+//    }
+//    public Singer findSingerById(long id ){
+//        for (Singer s: adminDAO.findAllSinger()){
+//            if  (s.getId() == id){
+//                return s;
+//            }
+//        }
+//        return null;
+//    }
 }

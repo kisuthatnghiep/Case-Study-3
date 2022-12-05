@@ -91,8 +91,9 @@ public class UserServlet extends HttpServlet {
     private void homeUser(HttpServletRequest request,HttpServletResponse response) throws IOException, ServletException {
         RequestDispatcher requestDispatcher = request.getRequestDispatcher("homeUser.jsp");
         request.setAttribute("listSong", userService.findAllSong());
+        request.setAttribute("listMapSinger", userService.mapListSinger());
         request.setAttribute("user", userService.detailUser(request));
-        request.setAttribute("listSinger",adminDAO.findAllSinger());
+//        request.setAttribute("listSinger",adminDAO.findAllSinger());
         request.setAttribute("listPlayList", userService.findPlaylistUser());
         requestDispatcher.forward(request, response);
     }

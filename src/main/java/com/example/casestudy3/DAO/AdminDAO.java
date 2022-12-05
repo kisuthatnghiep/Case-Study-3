@@ -106,7 +106,7 @@ public class AdminDAO {
     }
     public double totalPrice(){
         double totalPrice = 0;
-        try(PreparedStatement preparedStatement = connection.prepareStatement(TOTAL_PRICE)){
+        try(PreparedStatement preparedStatement = connection.prepareStatement( TOTAL_PRICE)){
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()){
                 totalPrice += resultSet.getDouble("totalPrice");

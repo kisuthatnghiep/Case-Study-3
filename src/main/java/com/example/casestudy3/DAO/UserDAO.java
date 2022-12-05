@@ -1,16 +1,14 @@
 package com.example.casestudy3.DAO;
 
 import com.example.casestudy3.connection.MyConnection;
-import com.example.casestudy3.model.Playlist;
-import com.example.casestudy3.model.PlaylistDetail;
-import com.example.casestudy3.model.Song;
-import com.example.casestudy3.model.User;
+import com.example.casestudy3.model.*;
 
 import java.sql.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class UserDAO {
     private Connection connection;
@@ -46,6 +44,7 @@ public class UserDAO {
     private final String DELETE_SONG_PLAYLIST = "update playlistdetail set status = 0 where playlistId = ? & songId = ?;";
     private final String SELECT_PLAYLIST = "select * from playlistdetail where status = 1;";
     private final String UPDATE_WALLET = "update users set wallet = ? where id = ?;";
+    private final String SELECT_ALL_SINGERS = "select * from singer where status = 1;";
 
     public UserDAO() {
         connection =  MyConnection.getConnection();
@@ -64,7 +63,7 @@ public class UserDAO {
     }
 
     // tim kiem bai hat theo ten, ca si
-//    public List<Song> findSearchSongByName(String search){
+    public List<Song> findSearchSongByName(String search){
 //        List<Song> songs = new ArrayList<Song>();
 //        try (PreparedStatement preparedStatement =
 //                     connection.prepareStatement(SELECT_SONG_BY_SEARCH+" name like "+"%"+search+"% ;")){
@@ -75,9 +74,9 @@ public class UserDAO {
 //        } catch (SQLException e) {
 //            throw new RuntimeException(e);
 //        }
-//        return songs;
-//    }
-//    public List<Song> findSearchSongBySinger(long singerId){
+        return null;
+    }
+    public List<Song> findSearchSongBySinger(long singerId){
 //        List<Song> songs = new ArrayList<Song>();
 //        try (PreparedStatement preparedStatement =
 //                     connection.prepareStatement(SELECT_SONG_BY_SEARCH+" singerId = "+singerId+" ;")){
@@ -89,7 +88,8 @@ public class UserDAO {
 //            throw new RuntimeException(e);
 //        }
 //        return songs;
-//    }
+        return null;
+    }
     //  tim kiem bai hat theo playlist
     public List<Song> songByPlayList(String search){
         List<Song> songs = new ArrayList<Song>();
@@ -235,15 +235,36 @@ public class UserDAO {
         }
         return playlistDetails;
     }
-    public boolean recharge(long userId, double wallet){
+    public void recharge(long userId, double wallet){
         try(PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_WALLET)){
             preparedStatement.setDouble(1, wallet);
             preparedStatement.setLong(2, userId);
-            return preparedStatement.executeUpdate()>0;
+            preparedStatement.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
+    public Map<Long,Singer> mapListSinger(){
+        Map<Long,Singer> singers = new HashMap<>();
+        try (PreparedStatement statement = connection.prepareStatement(SELECT_ALL_SINGERS)){
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()){
+                long id = resultSet.getLong("id");
+                String name = resultSet.getString("fullName");
+                String account = resultSet.getString("userAccount");
+                String password = resultSet.getString("userPassword");
+                String phone = resultSet.getString("telephone");
+                String email = resultSet.getString("email");
+                double income = resultSet.getDouble("income");
+                int status = resultSet.getInt("status");
+                singers.put(id,new Singer(id, name,account,password,phone,email,income,status ));
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return singers;
+    }
+
     private static void addListSong(List<Song> songs, ResultSet resultSet) throws SQLException {
         long id = resultSet.getLong("id");
         String name = resultSet.getString("name");

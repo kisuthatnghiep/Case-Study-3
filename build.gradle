@@ -30,10 +30,7 @@ dependencies {
 dependencies {
     compileOnly('javax.servlet:javax.servlet-api:4.0.1')
     implementation group: 'javax.servlet', name: 'jstl', version: '1.2'
-//    implementation group: 'mysql', name: 'mysql-connector-java', version: '8.0.23'
-    // https://mvnrepository.com/artifact/javax.servlet/servlet-api
-    compileOnly group: 'javax.servlet', name: 'servlet-api', version: '2.5'
-
+    implementation group: 'mysql', name: 'mysql-connector-java', version: '8.0.28'
 }
 
 test {

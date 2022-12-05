@@ -82,6 +82,7 @@
     <div id="main-content">
         <div class="container">
             <div class="row">
+                <h3 style="font-family: sans-serif">Bài hát</h3>
                 <div id="information">
                     <table class="table table-hover" style="margin-top:30px">
                         <tr>
@@ -89,22 +90,22 @@
                             <th>Ca sĩ</th>
                             <th>Mô tả</th>
                             <th>Giá tiền</th>
-                            <th>action</th>
+                            <th></th>
                         </tr>
                         <c:forEach var="song" items="${listSong}">
                             <c:if test="${song.getStatus() == 1}">
                                 <tr>
-                                    <td>><c:out value="${song.getName()}"/></td>
-                                    <td><c:out value="${listSinger.get(song.getSingerId()).getName()}"/></td>
+                                    <td><c:out value="${song.getName()}"/></td>
+                                    <td><c:out value="${listMapSinger.get(song.getSingerId()).getName()}"/></td>
                                     <td><c:out value="${song.getDescription()}"/></td>
                                     <td><c:out value="${song.getPrice()}"/></td>
-                                    <td><a href="#"><i></i></a></td>
+                                    <td><a href="#"><i class="bi bi-cart4"></i></a></td>
                                 </tr>
                             </c:if>
                             <c:if test="${song.getStatus() == -1}">
                                 <tr>
-                                    <td>><c:out value="${song.getName()}"/></td>
-                                    <td><c:out value="${listSinger.get(song.getSingerId()).getName()}"/></td>
+                                    <td><c:out value="${song.getName()}"/></td>
+                                    <td><c:out value="${listMapSinger.get(song.getSingerId()).getName()}"/></td>
                                     <td><c:out value="${song.getDescription()}"/></td>
                                     <td><c:out value="${song.getPrice()}"/></td>
                                     <td><c:out value="Đã mua"/></td>
@@ -113,6 +114,7 @@
                         </c:forEach>
                     </table>
                 </div>
+                <h3  style="font-family: sans-serif">Playlist</h3>
                 <div id="song-list">
                     <table class="table table-hover" style="margin-top:30px; text-align: center">
                         <tr>
@@ -125,17 +127,14 @@
                                 <td class="col-sm-3"><c:out value="${p.getName()}"/></td>
                                 <td class="col-sm-2"><c:out value="${p.getDate()}"/></td>
                                 <td class="col-sm-7">
-                                    <table class="table table-hover">
-                                        <tr>
-                                            <th class="col-sm-5">Tên bài hát</th>
-                                            <th class="col-sm-4">Ca sĩ</th>
-                                            <th class="col-sm-3">action</th>
-                                        </tr>
+                                    <table class="table table-borderless">
                                         <c:forEach items="${listSong}" var="s">
                                             <tr>
-                                                <td class="col-sm-3"><c:out value="${s.getName()}"/></td>
-                                                <td class="col-sm-3"><c:out value="${listSinger.get(s.getSingerId()).getName()}"/></td>
-                                                <td></td>
+                                                <td class="col-sm-3"></td>
+                                                <td class="col-sm-6"><a href="#"><c:out value="${s.getName()}"/></a><br>
+                                                    <p style="font-size: smaller"><c:out value="${listMapSinger.get(s.getSingerId()).getName()}"/></p>
+                                                </td>
+                                                <td class="col-sm-3"><a href="#"><i class="bi bi-trash" ></i></a></td>
                                             </tr>
                                         </c:forEach>
                                     </table>

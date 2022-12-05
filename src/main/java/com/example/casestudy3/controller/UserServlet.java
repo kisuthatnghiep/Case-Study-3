@@ -7,6 +7,7 @@ import javax.servlet.*;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 import java.io.IOException;
+import java.sql.SQLException;
 
 @WebServlet(name = "UserServlet", value = "/UserServlet")
 public class UserServlet extends HttpServlet {
@@ -23,6 +24,8 @@ public class UserServlet extends HttpServlet {
         }
         switch (action){
             case "detailUser": detailUser(request,response); break;
+            case "deleteSongUser": deleteSongUser(request,response); break;
+            default: homeUser(request,response);
 
         }
     }
@@ -36,6 +39,21 @@ public class UserServlet extends HttpServlet {
         switch (action){
             case "createPlayList": createPlayList(request,response); break;
             case "buySong": userBuySong(request,response); break;
+            case "search": searchSong(request,response); break;
+            case "addSongToPlayList":
+                try {
+                    addSongToPlayList(request,response);
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+                break;
+            case "recharge":
+                try {
+                    recharge(request,response);
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+                break;
         }
     }
     private void createPlayList(HttpServletRequest request,HttpServletResponse response) throws IOException {
@@ -45,10 +63,47 @@ public class UserServlet extends HttpServlet {
     private void detailUser(HttpServletRequest request,HttpServletResponse response) throws IOException, ServletException {
         RequestDispatcher requestDispatcher = request.getRequestDispatcher("user/detail_user/detail_user.jsp");
         request.setAttribute("user",userService.detailUser(request));
+        request.setAttribute("listSongUser",userService.listSongByUser());
+        request.setAttribute("listPlayListUser",userService.findPlaylistUser());
+        request.setAttribute("sumPrice",userService.sumPriceBuySongUser());
         requestDispatcher.forward(request, response);
     }
     private void userBuySong(HttpServletRequest request,HttpServletResponse response) throws IOException, ServletException {
-        userService.buySong(request);
-        response.sendRedirect("homeUser");
+        if (userService.buySong(request)){
+            response.sendRedirect("homeUser");
+        }else {
+            RequestDispatcher requestDispatcher = request.getRequestDispatcher("homeUser");
+            request.setAttribute("notify","Buy failed, because you don't have enough money");
+            requestDispatcher.forward(request, response);
+        }
+    }
+    private void searchSong(HttpServletRequest request,HttpServletResponse response) throws IOException, ServletException {
+        RequestDispatcher requestDispatcher = request.getRequestDispatcher("homeUser");
+        request.setAttribute("listSongByName", userService.searchSongByName(request));
+        request.setAttribute("listSongBySinger",  userService.searchSongBySinger(request));
+        request.setAttribute("listSongByPlayList",  userService.searchSongByPlayList(request));
+        requestDispatcher.forward(request, response);
+    }
+    private void homeUser(HttpServletRequest request,HttpServletResponse response) throws IOException, ServletException {
+        RequestDispatcher requestDispatcher = request.getRequestDispatcher("homeUser");
+        request.setAttribute("listSong", userService.findAllSong());
+        request.setAttribute("user", userService.detailUser(request));
+        requestDispatcher.forward(request, response);
+    }
+    private void deleteSongUser(HttpServletRequest request,HttpServletResponse response) throws IOException {
+        userService.deleteSongUser(request);
+        response.sendRedirect("/UserServlet");
+    }
+    private void addSongToPlayList(HttpServletRequest request,HttpServletResponse response) throws  SQLException {
+        try {
+            userService.addSongToPlayList(request);
+            response.sendRedirect("/UserServlet");
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    private void recharge(HttpServletRequest request,HttpServletResponse response) throws SQLException, IOException {
+        userService.recharge(request);
+        response.sendRedirect("/UserServlet");
     }
 }

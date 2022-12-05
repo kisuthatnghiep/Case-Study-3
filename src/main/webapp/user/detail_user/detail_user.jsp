@@ -46,7 +46,7 @@
         </div>
       </div>
       <div class="col-md-3 vertical signIn">
-        <a id="avatar" href="">Đăng nhập</a>
+        <a id="avatar" href=""><c:out value="${user.getName()}"/></a>
         <img src="../../sourcePicture/keeng_ver5_02.png"/>
       </div>
     </div>
@@ -127,7 +127,7 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
-          <button type="submit" class="btn btn-primary">Create</button>
+          <button type="submit" class="btn btn-light">Create</button>
         </div>
       </form>
     </div>

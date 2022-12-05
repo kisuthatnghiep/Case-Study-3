@@ -53,5 +53,6 @@
     </div>
 </div>
 <script src="audioPlayer.js"></script>
+<script src="../actionDelete.js"></script>
 </body>
 </html>

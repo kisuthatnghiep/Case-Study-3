@@ -14,7 +14,15 @@ public class LogInServlet extends HttpServlet {
     private AdminDAO adminDAO = new AdminDAO();
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+        String action = request.getParameter("action");
+        if (action == null) {
+            action = "";
+        }
+        switch (action) {
+            case "login":
+                goHome(request, response);
+                break;
+        }
     }
 
     @Override
@@ -40,7 +48,7 @@ public class LogInServlet extends HttpServlet {
                      request.setAttribute("user",adminDAO.findByIdUser(loginService.checkOnline()));
                 requestDispatcher.forward(request,response);
             break;
-            case 3:  requestDispatcher = request.getRequestDispatcher("homeSinger.jsp");
+            case 3:  requestDispatcher = request.getRequestDispatcher("SingerServlet");
                      request.setAttribute("singer",adminDAO.findByIdSinger(loginService.checkOnline()));
                 requestDispatcher.forward(request,response);
             break;

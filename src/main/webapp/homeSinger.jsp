@@ -47,7 +47,7 @@
             </div>
             <div class="col-md-3 vertical signIn">
                 <a id="avatar" href="" style = "margin-left: 60px"><c:out value="${singer.getName()}"/></a>
-                <img src="sourcePicture/keeng_ver5_02.png"/>
+                <img src="sourcePicture/keeng_ver5_02.png" alt="img"/>
                 <a href="http://localhost:8080/login/login.jsp">Đăng xuất</a>
             </div>
         </div>
@@ -115,7 +115,7 @@
                         <fieldset disabled>
                         <div class="mb-3">
                             <label for="disabledTextInput" class="form-label">Thu nhập</label>
-                            <input type="text" id="disabledTextInput" class="form-control">
+                            <input type="text" id="disabledTextInput" class="form-control" value="${singer.getIncome()} (USD)">
                         </div>
                     </fieldset>
                     </div>
@@ -131,12 +131,23 @@
                 <tr>
                     <th>STT</th>
                     <th>Tên bài hát</th>
-                    <th>Lượt tải xuống</th>
+                    <th>Mô tả</th>
                     <th>Giá tiền</th>
-                    <th>Xóa</th>
+                    <th></th>
                 </tr>
-
+                <c:forEach var="song" items="${listSong}">
+                    <tr>
+                        <td><c:out value="${song.getId()}"/></td>
+                        <td><a href="audioPlayer/audioPlayer.jsp" onclick="playAudio(${song.getName()},${song.getLink()})"><c:out value="${song.getName()}"/></a></td>
+                        <td><c:out value="${song.getDescription()}"/></td>
+                        <td><c:out value="${song.getPrice()}"/></td>
+                        <td><a href="#"><i class="bi bi-trash" data-bs-toggle="modal" data-bs-target="#delete" onclick="referenceDelete(${song.getId()})"></i></a></td>
+                    </tr>
+                </c:forEach>
             </table>
+            <div class="col-12">
+                <button type="submit" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" style="margin-bottom: 20px">Thêm bài hát</button>
+            </div>
         </div>
     </div>
     </div>
@@ -213,5 +224,60 @@
         </div>
     </div>
 </div>
+<%--Modal create song--%>
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+                <form action="SingerServlet?action=createSong" method="post">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel1" style="text-align: center">Tạo bài hát</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="col-12">
+                    <label for="input-song" class="form-label">Tên bài hát</label>
+                    <input type="text" name="nameSong" class="form-control" id="input-song">
+                </div>
+                <div class="col-12">
+                    <label for="input-URL" class="form-label">URL</label>
+                    <input type="text" name="url" class="form-control" id="input-URL">
+                </div>
+                <div class="col-12">
+                    <label for="input-description" class="form-label">Mô tả</label>
+                    <input type="text" name="description" class="form-control" id="input-description">
+                </div>
+                <div class="col-12">
+                    <label for="input-price" class="form-label">Giá tiền</label>
+                    <input type="text" name="price" class="form-control" id="input-price">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-primary">Tạo bài hát</button>
+            </div></form>
+        </div>
+    </div>
+</div>
+
+<!-- Modal delete -->
+<div class="modal fade" id="delete" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Confirm</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Are you sure want to delete?
+            </div>
+            <div class="modal-footer" id="delete-parameter">
+                <a href="SingerServlet?action=delete" onclick="location.href=(this.href+'&id='+b);return false;" id="a">
+                    <button type="button" class="btn btn-primary">Yes</button></a>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="actionDelete.js"></script>
+<script src="audioPlayer/audioPlayer.js"></script>
 </body>
 </html>

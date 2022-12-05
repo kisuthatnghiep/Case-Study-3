@@ -66,7 +66,7 @@ public class RegisterServlet extends HttpServlet {
             session.setAttribute("messageAccount", "**Tài khoản đã tồn tại");
             response.sendRedirect("http://localhost:8080/register/register.jsp");
         } else if (account.equals("admin")) {
-            session.setAttribute("messageAccount", "**Tài khoản đã tồn tại");
+            session.setAttribute("messageAccount", "**Tài khoản không được đặt tên là admin");
             response.sendRedirect("http://localhost:8080/register/register.jsp");
         } else if (!regex.validateAccount(account)) {
             session.setAttribute("messageAccount", "**Tài khoản phải có ít nhất 6 kí tự");

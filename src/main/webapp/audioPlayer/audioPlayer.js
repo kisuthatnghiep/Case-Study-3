@@ -136,7 +136,4 @@ init(indexSong);
 }
 playAudio("nang am xa dan","holo.mp3");
 
-let b = '';
-function referenceDelete(id) {
-    b = id
-}
+

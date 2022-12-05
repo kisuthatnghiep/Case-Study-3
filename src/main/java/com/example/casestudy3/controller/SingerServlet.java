@@ -1,5 +1,7 @@
 package com.example.casestudy3.controller;
 
+import com.example.casestudy3.DAO.AdminDAO;
+import com.example.casestudy3.service.login.LoginService;
 import com.example.casestudy3.service.singerService.SingerService;
 
 import javax.servlet.*;
@@ -10,6 +12,8 @@ import java.io.IOException;
 @WebServlet(name = "SingerServlet", value = "/SingerServlet")
 public class SingerServlet extends HttpServlet {
     SingerService singerService = new SingerService();
+    AdminDAO adminDAO = new AdminDAO();
+    LoginService loginService = new LoginService();
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String action = request.getParameter("action");
@@ -52,6 +56,7 @@ public class SingerServlet extends HttpServlet {
     private void displayListSong(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         RequestDispatcher requestDispatcher = request.getRequestDispatcher("homeSinger.jsp");
         request.setAttribute("listSong", singerService.findAllSingerSong());
+        request.setAttribute("singer",adminDAO.findByIdSinger(loginService.checkOnline()));
         requestDispatcher.forward(request,response);
     }
 

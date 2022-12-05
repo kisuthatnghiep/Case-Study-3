@@ -14,7 +14,15 @@ public class LogInServlet extends HttpServlet {
     private AdminDAO adminDAO = new AdminDAO();
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+        String action = request.getParameter("action");
+        if (action == null) {
+            action = "";
+        }
+        switch (action) {
+            case "login":
+                goHome(request, response);
+                break;
+        }
     }
 
     @Override

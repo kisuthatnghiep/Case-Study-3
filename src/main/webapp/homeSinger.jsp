@@ -270,13 +270,14 @@
                 Are you sure want to delete?
             </div>
             <div class="modal-footer" id="delete-parameter">
-                <a href="SingerServlet?action=delete" onclick="location.href=this.href+'&id='+b;return false;" id="a">
+                <a href="SingerServlet?action=delete" onclick="location.href=(this.href+'&id='+b);return false;" id="a">
                     <button type="button" class="btn btn-primary">Yes</button></a>
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
             </div>
         </div>
     </div>
 </div>
+<script src="actionDelete.js"></script>
 <script src="audioPlayer/audioPlayer.js"></script>
 </body>
 </html>

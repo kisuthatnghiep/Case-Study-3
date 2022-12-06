@@ -115,19 +115,19 @@
                         <div class="d-inline-block" style="width: 30%">
                             <label for="formGroupExampleInput" class="form-label">Tháng</label>
                             <select class="form-select" name="month" aria-label="Default select example" id="formGroupExampleInput">
-                                <option value="0">----</option>
-                                <option value="1">1</option>
-                                <option value="2">2</option>
-                                <option value="3">3</option>
-                                <option value="4">4</option>
-                                <option value="5">5</option>
-                                <option value="6">6</option>
-                                <option value="7">7</option>
-                                <option value="8">8</option>
-                                <option value="9">9</option>
-                                <option value="10">10</option>
-                                <option value="11">11</option>
-                                <option value="12">12</option>
+                                <option selected id="0" class="focus" value="0">----</option>
+                                <option id="1" class="focus" value="1">1</option>
+                                <option id="2" class="focus" value="2">2</option>
+                                <option id="3" class="focus" value="3">3</option>
+                                <option id="4" class="focus" value="4">4</option>
+                                <option id="5" class="focus" value="5">5</option>
+                                <option id="6" class="focus" value="6">6</option>
+                                <option id="7" class="focus" value="7">7</option>
+                                <option id="8" class="focus" value="8">8</option>
+                                <option id="9" class="focus" value="9">9</option>
+                                <option id="10" class="focus" value="10">10</option>
+                                <option id="11" class="focus" value="11">11</option>
+                                <option id="12" class="focus" value="12">12</option>
                             </select>
                         </div>
                         <div class="d-inline-block" style="width: 30%; margin-left: 10px">
@@ -139,7 +139,7 @@
                             </select>
                         </div>
                         <div class="d-inline-block" style="width: 30%; margin-left: 10px">
-                            <button class="btn btn-primary">Tìm kiếm</button>
+                            <button class="btn btn-primary" onclick="passSelected()">Tìm kiếm</button>
                         </div>
                     </form>
                     <hr>

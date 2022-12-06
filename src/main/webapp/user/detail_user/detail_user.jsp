@@ -14,14 +14,14 @@
   <link rel="stylesheet" href="/asset/bootstrap/css/bootstrap.min.css">
   <script src="/asset/bootstrap/js/bootstrap.js"></script>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css">
-  <link rel="stylesheet" href="/user/detail_user/detail_user.css">
+  <link rel="stylesheet" href="/asset/CSS/style.css">
 </head>
 <body>
 <div id="header">
   <div class="container">
     <div class="row" style="padding: 10px;height: 75px">
       <div class="col-md-1 vertical">
-        <a href="http://localhost:8080/login?action=goHomeUser"><img src="../../sourcePicture/logo_keeng.png" style="margin-top: 6px"/></a>
+        <a href="${pageContext.request.contextPath}/UserServlet"><img src="../../sourcePicture/logo_keeng.png" style="margin-top: 6px"/></a>
       </div>
       <div class="col-md-2 vertical" id="menu">
         <ul id="nav">
@@ -37,7 +37,9 @@
       </div>
       <div class="col-md-6 avatar vertical">
         <div class="input-group">
-          <input class="form-control border-end-0 border" type="search" placeholder="Tìm kiếm" id="example-search-input">
+          <form action="${pageContext.request.contextPath}/UserServlet?action=searchDtail" method="post" style="width: 620px">
+          <input class="form-control border-end-0 border" type="search" name="search" placeholder="Tìm kiếm" id="example-search-input">
+          </form>
           <span class="input-group-append">
                     <button class="btn btn-outline-secondary bg-white border-start-0 border-bottom-0 border ms-n5" type="button">
                         <i class="bi bi-search"></i>
@@ -52,54 +54,127 @@
     </div>
   </div>
 </div>
+
 <div id="content">
   <div id="slider">
-    <div class="container" >
-
-      <div class="col col-md-4" style="float: left;">
-<%--      sidebar--%>
+    <div class="container" style="padding: 0">
+      <div id="carouselExampleInterval" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-inner">
+          <div class="carousel-item active" data-bs-interval="3000">
+            <img src="../../sourcePicture/1669777843552_org.jpg" class="d-block w-100" alt="...">
+          </div>
+          <div class="carousel-item" data-bs-interval="3000">
+            <img src="../../sourcePicture/1669806008334_org.jpg" class="d-block w-100" alt="...">
+          </div>
+          <div class="carousel-item">
+            <img src="../../sourcePicture/1669880347398_org.jpg" class="d-block w-100" alt="...">
+          </div>
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleInterval" data-bs-slide="prev">
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleInterval" data-bs-slide="next">
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Next</span>
+        </button>
       </div>
+    </div>
+  </div>
+  <div id="main-content">
+    <div class="container">
+      <div class="row">
+        <div id="information">
+          <h3>Thông tin cá nhân</h3>
+          <div class="col-md-4">
+            <img src="../../sourcePicture/avatardeatil.jpg"
+                 style="width: 70%;border-radius: 50%" alt="">
+          </div>
+          <div class="col-md-8">
+            <form class="row g-3" id="info-form">
+              <div class="col-md-6">
+                <fieldset disabled>
+                  <label for="input-account" class="form-label">Tài khoản</label>
+                  <input type="text" class="form-control" id="input-account" value="${user.getAccount()}">
+                </fieldset>
+              </div>
+              <div class="col-md-6">
+                <label for="inputPassword4" class="form-label">Mật khẩu</label>
+                <input type="password" class="form-control" id="inputPassword4"  value="${user.getPassword()}">
+              </div>
+              <div class="col-12">
+                <label for="input-name" class="form-label">Họ và tên</label>
+                <input type="text" class="form-control" id="input-name"  value="${user.getName()}">
+              </div>
+              <div class="col-12">
+                <label for="inputEmail" class="form-label">Email</label>
+                <input type="email" class="form-control" id="inputEmail" value="${user.getEmail()}">
+              </div>
+              <div class="col-md-6">
+                <label for="inputPhone" class="form-label">Số điện thoại</label>
+                <input type="text" class="form-control" id="inputPhone" value="${user.getPhone()}">
+              </div>
+              <div class="col-md-6">
+                <fieldset disabled>
+                  <div class="mb-3">
+                    <label for="disabledTextInput" class="form-label">Ví</label>
+                    <input type="text" id="disabledTextInput" class="form-control" value="${user.getWallet()} (USD)">
+                  </div>
+                </fieldset>
+              </div>
+              <div class="col-12">
+                <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                  Tạo Play List</button>
+              </div>
+            </form>
+          </div>
+        </div>
+        <div style="margin-top: 20px;margin-bottom:20px;background-color: white;">
+          <h3>Danh sách play list</h3>
+          <table class="table table-hover" style="margin-top:30px">
+            <tr>
+              <th>Tên danh sách</th>
+              <th>Ngày tạo</th>
+              <th></th>
+            </tr>
+            <c:forEach var="dtl" items="${listPlayListUser}">
+              <tr>
+                <td><c:out value="${dtl.getName()}"/></td>
+                <td><c:out value="${dtl.getDate()}"/></td>
+                <td><a href="#"><i class="bi bi-trash" data-bs-toggle="modal" data-bs-target="#delete"
+                                   style="font-size:20px " onclick="referenceDelete(${dtl.getId()})"></i></a></td>
+              </tr>
+            </c:forEach>
+          </table>
+          <div class="col-12">
 
+          </div>
+        </div>
+        <div id="song-list">
+          <h3>Danh sách bài hát</h3>
+          <h4>Tổng tiền đã chi: <c:out value="${sumPrice}"/></h4>
+          <table class="table table-hover" style="margin-top:30px">
+            <tr>
+              <th>Tên bài hát</th>
+              <th>Mô tả</th>
+              <th>Giá tiền</th>
+              <th></th>
+            </tr>
+            <c:forEach var="song" items="${listSongUser}">
+              <tr>
+                <td><a href="audioPlayer/audioPlayer.jsp" onclick="playAudio('${song.getName()}','${song.getLink()}')">
+                  <c:out value="${song.getName()}"/></a></td>
+                <td><c:out value="${song.getDescription()}"/></td>
+                <td><c:out value="${song.getPrice()}"/></td>
+                <td><a href="#"><i class="bi bi-file-earmark-plus" data-bs-toggle="modal" data-bs-target="#delete"
+                                   style="font-size:20px " onclick="referenceDelete(${song.getId()})"></i></a></td>
+              </tr>
+            </c:forEach>
+          </table>
+          <div class="col-12">
 
-      <div class="col col-md-2" style="float: left;margin-top: 50px">
-        <img style=" width: 150px;border-radius:50%;border-style: groove;" src="../../sourcePicture/avatardeatil.jpg" alt="avata loadding...." >
-      </div>
-      <div class="col col-md-6" style="float: left;margin-top: 30px">
-        <table class="col col-md-12" id="table_detail">
-          <tr>
-            <th class="col col-md-1"></th>
-            <th class="col col-md-2">Name</th>
-            <td class="col col-md-7"><c:out value="${user.getName()}"/></td>
-          </tr>
-          <tr>
-            <th class="col col-md-1"></th>
-            <th class="col col-md-2">Account</th>
-            <td class="col col-md-7"><c:out value="${user.getAccount()}"/></td>
-          </tr>
-          <tr>
-            <th class="col col-md-1"></th>
-            <th class="col col-md-2">Phone</th>
-            <td class="col col-md-7"><c:out value="${user.getPhone()}"/></td>
-          </tr>
-          <tr>
-            <th class="col col-md-1"></th>
-            <th class="col col-md-2">Email</th>
-            <td class="col col-md-7"><c:out value="${user.getEmail()}"/></td>
-          </tr>
-          <tr>
-            <th class="col col-md-1"></th>
-            <th class="col col-md-2">Wallet</th>
-            <td class="col col-md-7"><c:out value="${user.getWallet()}"/></td>
-          </tr>
-          <tr>
-            <th class="col col-md-1"></th>
-            <th class="col col-md-2" colspan="2">
-              <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                Create Play List
-              </button>
-            </th>
-          </tr>
-        </table>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -118,10 +193,6 @@
             <tr>
               <th class="col-sm-2"><label for="name">Name</label></th>
               <th class="col-sm-6"><input type="text" id="name" name="name" style="font-size: 20px"></th>
-            </tr>
-            <tr>
-              <th class="col-sm-2"> <label for="avatarSRC">Avatar</label></th>
-              <th class="col-sm-6"><input type="text" id="avatarSRC" name="avatarSRC" style="font-size: 20px"></th>
             </tr>
           </table>
         </div>

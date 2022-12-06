@@ -42,6 +42,7 @@ public class UserServlet extends HttpServlet {
             case "createPlayList": createPlayList(request,response); break;
             case "buySong": userBuySong(request,response); break;
             case "search": searchSong(request,response); break;
+            case "searchDetail": searchSongDetail(request,response); break;
             case "addSongToPlayList":
                 try {
                     addSongToPlayList(request,response);
@@ -82,19 +83,25 @@ public class UserServlet extends HttpServlet {
         }
     }
     private void searchSong(HttpServletRequest request,HttpServletResponse response) throws IOException, ServletException {
-        RequestDispatcher requestDispatcher = request.getRequestDispatcher("/homeUser.jsp");
-        request.setAttribute("listSong", userService.searchSongByName(request));
-        request.setAttribute("listSong",  userService.searchSongBySinger(request));
-        request.setAttribute("listSong",  userService.searchSongByPlayList(request));
+        RequestDispatcher requestDispatcher = request.getRequestDispatcher("homeUser.jsp");
+        request.setAttribute("listSong",  userService.searchSong(request));
+        informationHomeUser(request);
         requestDispatcher.forward(request, response);
     }
+
+    private void informationHomeUser(HttpServletRequest request) {
+        request.setAttribute("listMapSinger", userService.mapListSinger());
+        request.setAttribute("user", userService.detailUser(request));
+        request.setAttribute("listPlayList", userService.findPlaylistUser());
+        request.setAttribute("listMapSongPlayList", userService.searchMapSongByPlayList());
+        request.setAttribute("listSongPlayList", userService.searchListSongByPlayList());
+        request.setAttribute("mapPlayListDetail", userService.mapPlayListDetail());
+    }
+
     private void homeUser(HttpServletRequest request,HttpServletResponse response) throws IOException, ServletException {
         RequestDispatcher requestDispatcher = request.getRequestDispatcher("homeUser.jsp");
         request.setAttribute("listSong", userService.findAllSong());
-        request.setAttribute("listMapSinger", userService.mapListSinger());
-        request.setAttribute("user", userService.detailUser(request));
-//        request.setAttribute("listSinger",adminDAO.findAllSinger());
-        request.setAttribute("listPlayList", userService.findPlaylistUser());
+        informationHomeUser(request);
         requestDispatcher.forward(request, response);
     }
     private void deleteSongUser(HttpServletRequest request,HttpServletResponse response) throws IOException {
@@ -104,13 +111,19 @@ public class UserServlet extends HttpServlet {
     private void addSongToPlayList(HttpServletRequest request,HttpServletResponse response) throws  SQLException {
         try {
             userService.addSongToPlayList(request);
-            response.sendRedirect("/UserServlet");
+            response.sendRedirect("");
         }catch (Exception e) {
             e.printStackTrace();
         }
     }
     private void recharge(HttpServletRequest request,HttpServletResponse response) throws SQLException, IOException {
         userService.recharge(request);
-        response.sendRedirect("/UserServlet");
+        response.sendRedirect("");
+    }
+    private void searchSongDetail(HttpServletRequest request,HttpServletResponse response) throws  IOException, ServletException {
+        RequestDispatcher requestDispatcher = request.getRequestDispatcher("homeUser.jsp");
+        request.setAttribute("listSong",  userService.searchSongDetail(request));
+        informationHomeUser(request);
+        requestDispatcher.forward(request, response);
     }
 }

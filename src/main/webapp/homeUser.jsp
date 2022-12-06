@@ -37,7 +37,10 @@
             </div>
             <div class="col-md-6 avatar vertical">
                 <div class="input-group">
-                    <input class="form-control border-end-0 border" type="search" placeholder="Tìm kiếm" id="example-search-input">
+                    <form action="${pageContext.request.contextPath}/UserServlet?action=search" method="post">
+                    <input class="form-control border-end-0 border" name="search" type="search" placeholder="Tìm kiếm"
+                           id="example-search-input" style="width: 620px">
+                    </form>
                     <span class="input-group-append">
                     <button class="btn btn-outline-secondary bg-white border-start-0 border-bottom-0 border ms-n5" type="button">
                         <i class="bi bi-search"></i>
@@ -128,14 +131,19 @@
                                 <td class="col-sm-2"><c:out value="${p.getDate()}"/></td>
                                 <td class="col-sm-7">
                                     <table class="table table-borderless">
-                                        <c:forEach items="${listSong}" var="s">
+                                        <c:forEach items="${listSongPlayList}" var="s">
+                                            <c:if test="${mapPlayListDetail.get(s.getId()) == p.getId()}">
                                             <tr>
                                                 <td class="col-sm-3"></td>
-                                                <td class="col-sm-6"><a href="#"><c:out value="${s.getName()}"/></a><br>
+                                                <td class="col-sm-6"><a href="audioPlayer/audioPlayer.jsp" onclick="playAudio
+                                                        ('${listMapSongPlayList.get(s.getId()).getName()}',
+                                                        '${listMapSongPlayList.get(s.getId()).getLink()}')">
+                                                    <c:out value="${listMapSongPlayList.get(s.getId()).getName()}"/></a><br>
                                                     <p style="font-size: smaller"><c:out value="${listMapSinger.get(s.getSingerId()).getName()}"/></p>
                                                 </td>
                                                 <td class="col-sm-3"><a href="#"><i class="bi bi-trash" ></i></a></td>
                                             </tr>
+                                            </c:if>
                                         </c:forEach>
                                     </table>
                                 </td>
@@ -146,9 +154,6 @@
             </div>
         </div>
     </div>
-
-
-
 
 </div>
 <div id="footer">
@@ -222,5 +227,7 @@
         </div>
     </div>
 </div>
+<script src="audioPlayer/audioPlayer.js"></script>
+<script src="actionDelete.js"></script>
 </body>
 </html>

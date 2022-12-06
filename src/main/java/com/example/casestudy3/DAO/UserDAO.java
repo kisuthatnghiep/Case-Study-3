@@ -14,11 +14,10 @@ public class UserDAO {
     private Connection connection;
     private final String SELECT_SONG = "select s.id as id, s.name  as name, s.link as link, s.description as description," +
                                                     " s.price as price, s.singerId as singerId, s.status as status \n" +
-                                                    "from singer join song s on singer.id = s.singerId\n" +
-                                                    "join playlistdetail dtl on s.id = dtl.songId\n" +
-                                                    "join playlist p on dtl.playlistId = p.id " +
-                                                    "where ( p.name = ? or singer.name = ? or s.name like concat(%,?,%))" +
-                                                    "and singer.status = 1;";
+                                                    "from singer join song s on singer.id = s.singerId \n"+
+                                                    "where   singer.fullName = ? or s.name like concat('%',?,'%')\n"+
+                                                    "and singer.status = 1\n"+
+                                                    "group by s.id;";
     private final String SELECT_ALL_SONGS = "select s.id as id, s.name  as name, s.link as link, s.description as description," +
                                             " s.price as price, s.singerId as singerId, s.status as status \n" +
                                             "from song s join singer on s.singerId = singer.id\n" +
@@ -35,16 +34,36 @@ public class UserDAO {
                                                 "from users u join playlist p on u.id = p.userId\n" +
                                                 "join playlistdetail dtl on p.id = dtl.playlistId\n" +
                                                 "join song s on dtl.songId = s.id\n" +
-                                                "where u.id = ?;";
-    private final String SELECT_SUM_PRICE_USER ="select sum(s.price) as sumPrice\n" +
+                                                "where u.id = ?\n" +
+                                                "group by s.id;";
+    private final String SELECT_SUM_PRICE_USER ="select s.price as sumPrice \n" +
                                                 "from users u join playlist p on u.id = p.userId\n" +
                                                 "join playlistdetail dtl on p.id = dtl.playlistId\n" +
                                                 "join song s on dtl.songId = s.id\n" +
-                                                "where u.id = ?;";
+                                                "where u.id = ?\n" +
+                                                "group by s.id;";
     private final String DELETE_SONG_PLAYLIST = "update playlistdetail set status = 0 where playlistId = ? & songId = ?;";
     private final String SELECT_PLAYLIST = "select * from playlistdetail where status = 1;";
     private final String UPDATE_WALLET = "update users set wallet = ? where id = ?;";
     private final String SELECT_ALL_SINGERS = "select * from singer where status = 1;";
+    private final String SELECT_PLAYLISTDETAIL = "select * from playlistdetail where status = 1;";
+    private final String SELECT_SONG_BY_PLAYLIST =  "select s.id as id, s.name  as name, s.link as link, s.description as description," +
+                                                    " s.price as price, s.singerId as singerId, s.status as status \n" +
+                                                    "from singer join song s on singer.id = s.singerId\n" +
+                                                    "join playlistdetail dtl on s.id = dtl.songId\n" +
+                                                    "join playlist p on dtl.playlistId = p.id \n" +
+                                                    "join users u on p.userId = u.id\n" +
+                                                    "where singer.status = 1\n" +
+                                                    "group by s.id;";
+    private final String SELECT_SONG_DETAIL ="select s.id as id, s.name  as name, s.link as link, s.description as description," +
+                                            " s.price as price, s.singerId as singerId, s.status as status\n" +
+                                            "from singer join song s on singer.id = s.singerId\n" +
+                                            "join playlistdetail dtl on s.id = dtl.songId\n" +
+                                            "join playlist p on dtl.playlistId = p.id\n" +
+                                            "join users u on p.userId = u.id\n" +
+                                            "where (p.name  = ? or s.name like concat('%',?,'%'))\n" +
+                                            "and (singer.status = 1 and u.id = ?)\n"+
+                                            "group by s.id; ";
 
     public UserDAO() {
         connection =  MyConnection.getConnection();
@@ -61,40 +80,71 @@ public class UserDAO {
         }
         return songs;
     }
-
-    // tim kiem bai hat theo ten, ca si
-    public List<Song> findSearchSongByName(String search){
-//        List<Song> songs = new ArrayList<Song>();
-//        try (PreparedStatement preparedStatement =
-//                     connection.prepareStatement(SELECT_SONG_BY_SEARCH+" name like "+"%"+search+"% ;")){
-//            ResultSet resultSet = preparedStatement.executeQuery();
-//            while (resultSet.next()){
-//                addListSong(songs, resultSet);
-//            }
-//        } catch (SQLException e) {
-//            throw new RuntimeException(e);
-//        }
-        return null;
+    public Map<Long,Song> listMapSongByPlayList() {
+        Map<Long,Song> songs = new HashMap<>();
+        try (PreparedStatement statement = connection.prepareStatement(SELECT_SONG_BY_PLAYLIST)){
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()){
+                long id = resultSet.getLong("id");
+                String name = resultSet.getString("name");
+                String link = resultSet.getString("link");
+                String description = resultSet.getString("description");
+                double price = resultSet.getDouble("price");
+                long singerId =  resultSet.getLong("singerId");
+                int status = resultSet.getInt("status");
+                songs.put(id,new Song(id, name,link,description,price,singerId,status ));
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return songs;
     }
-    public List<Song> findSearchSongBySinger(long singerId){
-//        List<Song> songs = new ArrayList<Song>();
-//        try (PreparedStatement preparedStatement =
-//                     connection.prepareStatement(SELECT_SONG_BY_SEARCH+" singerId = "+singerId+" ;")){
-//            ResultSet resultSet = preparedStatement.executeQuery();
-//            while (resultSet.next()){
-//                addListSong(songs, resultSet);
-//            }
-//        } catch (SQLException e) {
-//            throw new RuntimeException(e);
-//        }
-//        return songs;
-        return null;
+    public List<Song> listSongByPlayList() {
+        List<Song> songs = new ArrayList<>();
+        try (PreparedStatement statement = connection.prepareStatement(SELECT_SONG_BY_PLAYLIST)){
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()){
+               addListSong(songs, resultSet);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return songs;
     }
-    //  tim kiem bai hat theo playlist
-    public List<Song> songByPlayList(String search){
+    public List<Song> searchSongDetail(String search, Long userId) {
+        List<Song> songs = new ArrayList<>();
+        try (PreparedStatement statement = connection.prepareStatement(SELECT_SONG_DETAIL)){
+            statement.setString(1, search);
+            statement.setString(2, search);
+            statement.setLong(3, userId);
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()){
+                addListSong(songs, resultSet);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return songs;
+    }
+    public HashMap<Long,Long> mapPlayListDetail (){
+        HashMap<Long,Long> mapPlayListDetail = new HashMap<>();
+        try (PreparedStatement statement = connection.prepareStatement(SELECT_PLAYLISTDETAIL)){
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()){
+                long SongId = resultSet.getLong("songId");
+                long PlaylistId = resultSet.getLong("playlistId");
+                mapPlayListDetail.put(SongId,PlaylistId);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return mapPlayListDetail;
+    }
+    public List<Song> searchSong(String search){
         List<Song> songs = new ArrayList<Song>();
         try (PreparedStatement preparedStatement = connection.prepareStatement(SELECT_SONG)){
             preparedStatement.setString(1,search);
+            preparedStatement.setString(2,search);
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()){
                 addListSong(songs, resultSet);
@@ -129,12 +179,12 @@ public class UserDAO {
 //            return preparedStatement.executeUpdate()>0;
 //        }
 //    }
-    public boolean addPlayList(long playListId,long songId) throws SQLException {
+    public void addPlayList(long playListId,long songId) throws SQLException {
         try (PreparedStatement preparedStatement = connection.prepareStatement(INSERT_PLAYLISTDETAIL)){
             preparedStatement.setLong(1,playListId);
             preparedStatement.setLong(2,songId);
             preparedStatement.setDate(3, Date.valueOf(LocalDate.now()));
-            return preparedStatement.executeUpdate()>0;
+            preparedStatement.executeUpdate();
         }
     }
     public boolean buySong(double wallet,double income,long playListId,long userId,long singerId,long songId){
@@ -203,18 +253,18 @@ public class UserDAO {
             preparedStatement.setLong(1,userId);
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()){
-                sumPrice = resultSet.getDouble("sumPrice") ;
+                sumPrice += resultSet.getDouble("sumPrice") ;
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
         return sumPrice;
     }
-    public boolean deleteSongByPlayList(long playlistId, long songId){
+    public void deleteSongByPlayList(long playlistId, long songId){
         try (PreparedStatement preparedStatement = connection.prepareStatement(DELETE_SONG_PLAYLIST)){
             preparedStatement.setLong(1,playlistId);
             preparedStatement.setLong(2,songId);
-            return preparedStatement.executeUpdate()>0;
+            preparedStatement.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

@@ -13,6 +13,7 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 import java.sql.Date;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -49,21 +50,24 @@ public class UserService {
         }
         return false;
     }
-    public List<Song> searchSongByName(HttpServletRequest request)  {
-        String text = request.getParameter("search");
-        return userDAO.findSearchSongByName(text);
+    public Map<Long,Song> searchMapSongByPlayList()  {
+        return userDAO.listMapSongByPlayList();
     }
-    public List<Song> searchSongBySinger(HttpServletRequest request)  {
-        String text = request.getParameter("search");
-        Singer singer = adminDAO.findByNameSinger(text);
-        return userDAO.findSearchSongBySinger(singer.getId());
+    public List<Song> searchListSongByPlayList()  {
+        return userDAO.listSongByPlayList();
     }
-    public List<Song> searchSongByPlayList(HttpServletRequest request)  {
-        String playList = request.getParameter("search");
-        return userDAO.songByPlayList(playList);
+    public HashMap<Long,Long> mapPlayListDetail()  {
+        return userDAO.mapPlayListDetail();
     }
-    public List<Song> findAllSong()  {
-        List<Song> songs = userDAO.findAllSong();
+
+    public List<Song> searchSong(HttpServletRequest request)  {
+        String search = request.getParameter("search");
+        List<Song> searchSongs = userDAO.searchSong(search);
+        filterSongs(searchSongs);
+        return searchSongs;
+    }
+
+    private void filterSongs(List<Song> songs) {
         List<Song> songsUser = userDAO.songByUser(loginService.checkOnline());
         for (Song song : songs) {
             for (Song s : songsUser){
@@ -74,6 +78,11 @@ public class UserService {
                 }
             }
         }
+    }
+
+    public List<Song> findAllSong()  {
+        List<Song> songs = userDAO.findAllSong();
+        filterSongs(songs);
         return songs;
     }
     public List<Song> listSongByUser()  {
@@ -117,19 +126,8 @@ public class UserService {
     public Map<Long, Singer> mapListSinger(){
         return userDAO.mapListSinger();
     }
-//    public List<Singer> listSinger(){
-//        List<Singer> singers = new ArrayList<>();
-//        for (Song song: findAllSong()){
-//            singers.add(findSingerById(song.getSingerId()));
-//        }
-//        return singers;
-//    }
-//    public Singer findSingerById(long id ){
-//        for (Singer s: adminDAO.findAllSinger()){
-//            if  (s.getId() == id){
-//                return s;
-//            }
-//        }
-//        return null;
-//    }
+    public List<Song> searchSongDetail(HttpServletRequest request) {
+        String search = request.getParameter("search");
+        return userDAO.searchSongDetail(search,loginService.checkOnline());
+    }
 }

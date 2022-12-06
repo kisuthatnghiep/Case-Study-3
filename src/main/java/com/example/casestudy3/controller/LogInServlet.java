@@ -45,8 +45,7 @@ public class LogInServlet extends HttpServlet {
         RequestDispatcher requestDispatcher ;
         switch (loginService.logIn(request)){
             case 1:  requestDispatcher = request.getRequestDispatcher("homeAdmin.jsp");
-//                request.setAttribute("totalPrice",adminService.totalPrice());
-//                request.setAttribute("sumPriceByDate",adminService.sumPriceByDate(request));
+                request.setAttribute("totalPrice",adminService.totalPrice());
                 request.setAttribute("listSinger",adminService.findAllSinger());
                 requestDispatcher.forward(request,response);
             break;

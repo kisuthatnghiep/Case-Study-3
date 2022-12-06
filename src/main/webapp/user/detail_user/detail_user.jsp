@@ -48,7 +48,7 @@
         </div>
       </div>
       <div class="col-md-3 vertical signIn">
-        <a id="avatar" href=""><c:out value="${user.getName()}"/></a>
+        <a id="avatar" style="margin-left: 60px" href=""><c:out value="${user.getName()}"/></a>
         <img src="../../sourcePicture/keeng_ver5_02.png"/>
         <a href="http://localhost:8080/login/login.jsp">Đăng xuất</a>
       </div>
@@ -326,6 +326,7 @@
     </div>
   </div>
 </div>
+
 <script src="user/detail_user/referenceDeleteSongUser.js"></script>
 </body>
 </html>

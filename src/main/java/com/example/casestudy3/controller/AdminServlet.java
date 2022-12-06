@@ -34,7 +34,7 @@ public class AdminServlet extends HttpServlet {
             action = "";
         }
         switch (action) {
-            case "search" : homeAdmin(request, response);
+            case "priceByDate" : homeAdmin(request, response);
         }
     }
     private void homeAdmin(HttpServletRequest request,HttpServletResponse response) throws ServletException, IOException {

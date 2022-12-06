@@ -111,10 +111,11 @@
                 <div class="w-50 d-inline-block"
                      style="background-color: white; margin-top: 20px; border-left: 10px #EAEAEAFF solid">
                     <h3>Doanh thu theo tháng/năm</h3>
-                    <form action="${pageContext.request.contextPath}/AdminServlet?action=search" method="post">
+                    <form action="${pageContext.request.contextPath}/AdminServlet?action=priceByDate" method="post">
                         <div class="d-inline-block" style="width: 30%">
                             <label for="formGroupExampleInput" class="form-label">Tháng</label>
                             <select class="form-select" name="month" aria-label="Default select example" id="formGroupExampleInput">
+                                <option value="0">----</option>
                                 <option value="1">1</option>
                                 <option value="2">2</option>
                                 <option value="3">3</option>
@@ -153,15 +154,15 @@
                     <tbody>
                     <tr>
                         <th scope="row">Tổng doanh thu</th>
-                        <td></td>
+                        <td><c:out value="${sumPriceByDate*1.0}"/></td>
                     </tr>
                     <tr>
                         <th scope="row">Doanh thu ca sĩ</th>
-                        <td></td>
+                        <td><c:out value="${sumPriceByDate*0.8}"/></td>
                     </tr>
                     <tr>
                         <th scope="row">Lợi nhuận web</th>
-                        <td colspan="2"></td>
+                        <td colspan="2"><c:out value="${sumPriceByDate*0.2}"/></td>
                     </tr>
                     </tbody>
                 </table>

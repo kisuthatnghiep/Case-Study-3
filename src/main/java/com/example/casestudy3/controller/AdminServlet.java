@@ -22,6 +22,7 @@ public class AdminServlet extends HttpServlet {
             action = "";
         }
         switch (action) {
+            case "deleteSinger": deleteSinger(request, response);break;
             default: homeAdmin(request, response);
         }
     }
@@ -33,11 +34,11 @@ public class AdminServlet extends HttpServlet {
             action = "";
         }
         switch (action) {
-            case "deleteSinger": deleteSinger(request, response);break;
+            case "priceByDate" : homeAdmin(request, response);
         }
     }
     private void homeAdmin(HttpServletRequest request,HttpServletResponse response) throws ServletException, IOException {
-        RequestDispatcher requestDispatcher = request.getRequestDispatcher("homeAdmin");
+        RequestDispatcher requestDispatcher = request.getRequestDispatcher("homeAdmin.jsp");
         request.setAttribute("totalPrice",adminService.totalPrice());
         request.setAttribute("sumPriceByDate",adminService.sumPriceByDate(request));
         request.setAttribute("listSinger",adminService.findAllSinger());
@@ -45,6 +46,7 @@ public class AdminServlet extends HttpServlet {
     }
     private void deleteSinger(HttpServletRequest request,HttpServletResponse response) throws ServletException, IOException {
         adminService.deleteSinger(request);
-        response.sendRedirect("homeAdmin");
+        response.sendRedirect("http://localhost:8080/AdminServlet");
     }
+
 }

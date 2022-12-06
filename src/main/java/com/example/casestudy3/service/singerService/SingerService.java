@@ -35,7 +35,6 @@ public class SingerService {
     }
 
     public void deleteById(HttpServletRequest request){
-//        String id = request.getParameter("id");
         Long id = Long.parseLong(request.getParameter("id"));
         singerDAO.deleteSong(id);
     }

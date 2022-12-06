@@ -21,7 +21,7 @@
     <div class="container">
         <div class="row" style="padding: 10px;height: 75px">
             <div class="col-md-1 vertical">
-                <a href=""><img src="sourcePicture/logo_keeng.png" style="margin-top: 6px"/></a>
+                <a href="#"><img src="sourcePicture/logo_keeng.png" style="margin-top: 6px"/></a>
             </div>
             <div class="col-md-2 vertical" id="menu">
                 <ul id="nav">
@@ -58,7 +58,7 @@
 </div>
 <div id="content">
     <div id="slider">
-        <div class="container">
+        <div class="container" style="padding: 0">
             <div id="carouselExampleInterval" class="carousel slide" data-bs-ride="carousel">
                 <div class="carousel-inner">
                     <div class="carousel-item active" data-bs-interval="3000">
@@ -86,6 +86,7 @@
         <div class="container">
             <div class="row">
                 <h3 style="font-family: sans-serif">Bài hát</h3>
+                <p style="color: red;"><c:out value="${notify}"/></p>
                 <div id="information">
                     <table class="table table-hover" style="margin-top:30px">
                         <tr>
@@ -102,7 +103,7 @@
                                     <td><c:out value="${listMapSinger.get(song.getSingerId()).getName()}"/></td>
                                     <td><c:out value="${song.getDescription()}"/></td>
                                     <td><c:out value="${song.getPrice()}"/></td>
-                                    <td><a href="#"><i class="bi bi-cart4"></i></a></td>
+                                    <td><a href="#"><i class="bi bi-cart4" data-bs-toggle="modal" data-bs-target="#buySong" onclick="referenceAddSong(${song.getId()})"></i></a></td>
                                 </tr>
                             </c:if>
                             <c:if test="${song.getStatus() == -1}">
@@ -111,7 +112,7 @@
                                     <td><c:out value="${listMapSinger.get(song.getSingerId()).getName()}"/></td>
                                     <td><c:out value="${song.getDescription()}"/></td>
                                     <td><c:out value="${song.getPrice()}"/></td>
-                                    <td><c:out value="Đã mua"/></td>
+                                    <td><i class="bi bi-check2-square"></i></td>
                                 </tr>
                             </c:if>
                         </c:forEach>
@@ -132,7 +133,7 @@
                                 <td class="col-sm-7">
                                     <table class="table table-borderless">
                                         <c:forEach items="${listSongPlayList}" var="s">
-                                            <c:if test="${p.getId() == mapPlayListDetail.get(s.getId())}">
+                                            <c:if test="${mapPlayListDetail.get(p.getId()*10+s.getId()) == p.getId()}">
                                                 <tr>
                                                     <td class="col-sm-3"></td>
                                                     <td class="col-sm-6"><a href="audioPlayer/audioPlayer.jsp" onclick="playAudio
@@ -227,6 +228,33 @@
         </div>
     </div>
 </div>
+
+<%--modal mua bai hat--%>
+<div class="modal fade" id="buySong" tabindex="-1" aria-labelledby="exampleModalLabel3" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel3">Mua bài hát</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form action="${pageContext.request.contextPath}/UserServlet?action=buySong" method="post">
+                <div class="modal-body">
+                    <input name="songId" id="songId1" hidden>
+                    <select class="form-select" aria-label="Default select example" name="playListId">
+                        <c:forEach items="${listPlayList}" var="playlist">
+                            <option value="${playlist.getId()}"><c:out value="${playlist.getName()}"/></option>
+                        </c:forEach>
+                    </select>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">Xác nhận</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy bỏ</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<script src="referenceAddSong.js"></script>
 <script src="audioPlayer/audioPlayer.js"></script>
 <script src="actionDelete.js"></script>
 </body>

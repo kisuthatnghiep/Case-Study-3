@@ -1,7 +1,8 @@
-let b = '';
-function referenceDelete(id) {
-    b = id;
+let song = '';
+function referenceDeleteSong(id) {
+    song = id;
 }
+
 
 function playAudio(name, link) {
     musics.unshift({

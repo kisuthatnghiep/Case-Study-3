@@ -15,19 +15,19 @@ import java.util.List;
 public class AdminDAO {
     private Connection connection;
     private UserDAO userDAO;
-    private final String SELECT_ALL_USERS = "select * from users ;";
-    private final String SELECT_ALL_SINGERS = "select * from singer ;";
+    private final String SELECT_ALL_USERS = "select * from users where status = 1;";
+    private final String SELECT_ALL_SINGERS = "select * from singer where status = 1;";
     private final String TOTAL_PRICE = "select sum(singer.income) as totalPrice\n" +
-            "from singer ;";
+                                        "from singer ;";
     private final String DELETE_SINGER = "update singer set status = 0 where id = ? ;";
     private final String SUM_PRICE_BY_DATE = "select sum(singer.income) as sumPrice\n" +
-            "from singer join song s p on singer.id = s.singerId \n" +
-            "join playlistdetail dtl on s.id = dtl.songId \n" +
-            "group by month(dtl.date) = ? and year(dtl.date) = ? ;";
+                                            "from singer join song s p on singer.id = s.singerId \n" +
+                                            "join playlistdetail dtl on s.id = dtl.songId \n" +
+                                            "group by month(dtl.date) = ? and year(dtl.date) = ? ;";
     private final String SUM_PRICE_BY_YEAR = "select sum(singer.income) as sumPrice\n" +
-            "from singer join song s p on singer.id = s.singerId \n" +
-            "join playlistdetail dtl on s.id = dtl.songId \n" +
-            "group by year(dtl.date) = ? ;";
+                                            "from singer join song s p on singer.id = s.singerId \n" +
+                                            "join playlistdetail dtl on s.id = dtl.songId \n" +
+                                            "group by year(dtl.date) = ? ;";
     public AdminDAO() {
         connection = MyConnection.getConnection();
         userDAO = new UserDAO();

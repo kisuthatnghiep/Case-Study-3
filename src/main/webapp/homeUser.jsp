@@ -37,7 +37,10 @@
             </div>
             <div class="col-md-6 avatar vertical">
                 <div class="input-group">
-                    <input class="form-control border-end-0 border" type="search" placeholder="Tìm kiếm" id="example-search-input">
+                    <form action="${pageContext.request.contextPath}/UserServlet?action=search" method="post">
+                    <input class="form-control border-end-0 border" name="search" type="search" placeholder="Tìm kiếm"
+                           id="example-search-input" style="width: 620px">
+                    </form>
                     <span class="input-group-append">
                     <button class="btn btn-outline-secondary bg-white border-start-0 border-bottom-0 border ms-n5" type="button">
                         <i class="bi bi-search"></i>
@@ -46,7 +49,7 @@
                 </div>
             </div>
             <div class="col-md-3 vertical">
-                <a id="avatar" href="" style = "margin-left: 60px"><c:out value="${user.getName()}"/></a>
+                <a id="avatar" href="UserServlet?action=detailUser" style = "margin-left: 60px"><c:out value="${user.getName()}"/></a>
                 <img src="sourcePicture/keeng_ver5_02.png"/>
                 <a href="http://localhost:8080/login/login.jsp">Đăng xuất</a>
             </div>
@@ -79,6 +82,79 @@
             </div>
         </div>
     </div>
+    <div id="main-content">
+        <div class="container">
+            <div class="row">
+                <h3 style="font-family: sans-serif">Bài hát</h3>
+                <div id="information">
+                    <table class="table table-hover" style="margin-top:30px">
+                        <tr>
+                            <th>Tên bài hát</th>
+                            <th>Ca sĩ</th>
+                            <th>Mô tả</th>
+                            <th>Giá tiền</th>
+                            <th></th>
+                        </tr>
+                        <c:forEach var="song" items="${listSong}">
+                            <c:if test="${song.getStatus() == 1}">
+                                <tr>
+                                    <td><c:out value="${song.getName()}"/></td>
+                                    <td><c:out value="${listMapSinger.get(song.getSingerId()).getName()}"/></td>
+                                    <td><c:out value="${song.getDescription()}"/></td>
+                                    <td><c:out value="${song.getPrice()}"/></td>
+                                    <td><a href="#"><i class="bi bi-cart4"></i></a></td>
+                                </tr>
+                            </c:if>
+                            <c:if test="${song.getStatus() == -1}">
+                                <tr>
+                                    <td><c:out value="${song.getName()}"/></td>
+                                    <td><c:out value="${listMapSinger.get(song.getSingerId()).getName()}"/></td>
+                                    <td><c:out value="${song.getDescription()}"/></td>
+                                    <td><c:out value="${song.getPrice()}"/></td>
+                                    <td><c:out value="Đã mua"/></td>
+                                </tr>
+                            </c:if>
+                        </c:forEach>
+                    </table>
+                </div>
+                <h3  style="font-family: sans-serif">Playlist</h3>
+                <div id="song-list">
+                    <table class="table table-hover" style="margin-top:30px; text-align: center">
+                        <tr>
+                            <th class="col-sm-3">Tên danh sách bài hát</th>
+                            <th class="col-sm-2">Ngày tạo</th>
+                            <th class="col-sm-7">Danh sách bài hát</th>
+                        </tr>
+                        <c:forEach var="p" items="${listPlayList}">
+                            <tr>
+                                <td class="col-sm-3"><c:out value="${p.getName()}"/></td>
+                                <td class="col-sm-2"><c:out value="${p.getDate()}"/></td>
+                                <td class="col-sm-7">
+                                    <table class="table table-borderless">
+                                        <c:forEach items="${listSongPlayList}" var="s">
+                                            <c:if test="${mapPlayListDetail.get(s.getId()) == p.getId()}">
+                                            <tr>
+                                                <td class="col-sm-3"></td>
+                                                <td class="col-sm-6"><a href="audioPlayer/audioPlayer.jsp" onclick="playAudio
+                                                        ('${listMapSongPlayList.get(s.getId()).getName()}',
+                                                        '${listMapSongPlayList.get(s.getId()).getLink()}')">
+                                                    <c:out value="${listMapSongPlayList.get(s.getId()).getName()}"/></a><br>
+                                                    <p style="font-size: smaller"><c:out value="${listMapSinger.get(s.getSingerId()).getName()}"/></p>
+                                                </td>
+                                                <td class="col-sm-3"><a href="#"><i class="bi bi-trash" ></i></a></td>
+                                            </tr>
+                                            </c:if>
+                                        </c:forEach>
+                                    </table>
+                                </td>
+                            </tr>
+                        </c:forEach>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
 </div>
 <div id="footer">
     <div id="footer-top">
@@ -151,5 +227,7 @@
         </div>
     </div>
 </div>
+<script src="audioPlayer/audioPlayer.js"></script>
+<script src="actionDelete.js"></script>
 </body>
 </html>

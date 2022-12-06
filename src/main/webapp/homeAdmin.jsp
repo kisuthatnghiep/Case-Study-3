@@ -55,7 +55,7 @@
 </div>
 <div id="content">
     <div id="slider">
-        <div class="container">
+        <div class="container p-0">
             <div id="carouselExampleInterval" class="carousel slide" data-bs-ride="carousel">
                 <div class="carousel-inner">
                     <div class="carousel-item active" data-bs-interval="3000">
@@ -82,7 +82,94 @@
     <div id="main-content">
         <div class="container">
             <div class="row">
-                <div id="information">
+                <div class="w-50 d-inline-block"
+                     style="background-color: white; margin-top: 20px; border-right: 10px #EAEAEAFF solid">
+                    <h3>Tổng doanh thu </h3>
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th scope="col"></th>
+                            <th scope="col">Số tiền</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <th scope="row">Tổng doanh thu</th>
+                            <td><c:out value="${totalPrice*1.0}"/></td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Doanh thu ca sĩ</th>
+                            <td><c:out value="${totalPrice*0.8}"/></td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Lợi nhuận web</th>
+                            <td colspan="2"><c:out value="${totalPrice*0.2}"/></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="w-50 d-inline-block"
+                     style="background-color: white; margin-top: 20px; border-left: 10px #EAEAEAFF solid">
+                    <h3>Doanh thu theo tháng/năm</h3>
+                    <form action="${pageContext.request.contextPath}/AdminServlet?action=search" method="post">
+                        <div class="d-inline-block" style="width: 30%">
+                            <label for="formGroupExampleInput" class="form-label">Tháng</label>
+                            <select class="form-select" name="month" aria-label="Default select example" id="formGroupExampleInput">
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                                <option value="6">6</option>
+                                <option value="7">7</option>
+                                <option value="8">8</option>
+                                <option value="9">9</option>
+                                <option value="10">10</option>
+                                <option value="11">11</option>
+                                <option value="12">12</option>
+                            </select>
+                        </div>
+                        <div class="d-inline-block" style="width: 30%; margin-left: 10px">
+                            <label for="formGroupExampleInput1" class="form-label">Năm</label>
+                            <select class="form-select" name="year" aria-label="Default select example" id="formGroupExampleInput1">
+                                <option value="2022">2022</option>
+                                <option value="2021">2021</option>
+                                <option value="2020">2020</option>
+                            </select>
+                        </div>
+                        <div class="d-inline-block" style="width: 30%; margin-left: 10px">
+                            <button class="btn btn-primary">Tìm kiếm</button>
+                        </div>
+                    </form>
+                    <hr>
+<%--                Phần code <c:out> của Tú--%>
+                    <table class="table">
+                    <thead>
+                    <tr>
+                        <th scope="col"></th>
+                        <th scope="col">Số tiền</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <th scope="row">Tổng doanh thu</th>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Doanh thu ca sĩ</th>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Lợi nhuận web</th>
+                        <td colspan="2"></td>
+                    </tr>
+                    </tbody>
+                </table>
+<%--                Kết thúc code <c:out> của Tú--%>
+                </div>
+            </div>
+            <div class="row">
+                <div id="information" >
                     <h3>Danh sách ca sĩ</h3>
                     <table class="table table-hover" style="margin-top: 30px">
                         <tr>
@@ -93,8 +180,15 @@
                             <th>Thu nhập</th>
                             <th></th>
                         </tr>
-                        <c:forEach items="" var="">
-
+                        <c:forEach items="${listSinger}" var="singer">
+                            <tr>
+                                <td><c:out value="${singer.getAccount()}"/></td>
+                                <td><c:out value="${singer.getName()}"/></td>
+                                <td><c:out value="${singer.getEmail()}"/></td>
+                                <td><c:out value="${singer.getPhone()}"/></td>
+                                <td><c:out value="${singer.getIncome()}"/></td>
+                                <td><a href="#"><i class="bi bi-trash" data-bs-toggle="modal" data-bs-target="#deleteSinger" onclick="referenceDeleteSinger(${singer.getId()})"></i></a></td>
+                            </tr>
                         </c:forEach>
                     </table>
                 </div>
@@ -174,5 +268,26 @@
         </div>
     </div>
 </div>
+
+<!-- Modal delete -->
+<div class="modal fade" id="deleteSinger" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Xác nhận</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Bạn có chắc chắn muốn xóa ca sĩ không?
+            </div>
+            <div class="modal-footer" id="delete-parameter">
+                <a href="AdminServlet?action=deleteSinger" onclick="location.href=(this.href+'&singerId='+singer);return false;" id="a">
+                    <button type="button" class="btn btn-primary">Xác nhận</button></a>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy bỏ</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="actionDeleteSinger.js"></script>
 </body>
 </html>

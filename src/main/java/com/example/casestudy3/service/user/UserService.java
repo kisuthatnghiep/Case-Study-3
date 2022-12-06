@@ -27,18 +27,18 @@ public class UserService {
         adminDAO = new AdminDAO();
         loginService = new LoginService();
     }
-    public boolean createPlayList(HttpServletRequest request){
+    public void createPlayList(HttpServletRequest request){
         String name = request.getParameter("name");
         Date date = Date.valueOf(LocalDate.now());
-        return userDAO.createPlayList(new Playlist(name,date,loginService.checkOnline()));
+        userDAO.createPlayList(new Playlist(name,date,loginService.checkOnline()));
     }
     public User detailUser(HttpServletRequest request){
         return adminDAO.findByIdUser(loginService.checkOnline());
     }
     public boolean buySong(HttpServletRequest request)  {
         try {
-            long songId = Long.parseLong(request.getParameter("id"));
-            long playListId = Long.parseLong(request.getParameter("playList"));
+            long songId = Long.parseLong(request.getParameter("songId"));
+            long playListId = Long.parseLong(request.getParameter("playListId"));
             Song song = adminDAO.findByIdSong(songId);
             Singer singer = adminDAO.findByIdSinger(song.getSingerId());
             Long userId = loginService.checkOnline();
@@ -114,16 +114,18 @@ public class UserService {
     public List<Playlist> findPlaylistUser(){
         return userDAO.playlistUser(loginService.checkOnline());
     }
-    public void recharge(HttpServletRequest request) {
+    public boolean recharge(HttpServletRequest request) {
         try {
             double wallet = Double.parseDouble(request.getParameter("wallet"));
             User user = adminDAO.findByIdUser(loginService.checkOnline());
-            wallet += user.getWallet();
-            userDAO.recharge(loginService.checkOnline(), wallet);
+            if  (wallet > 0){
+                wallet += user.getWallet();
+                return userDAO.recharge(loginService.checkOnline(), wallet);
+            }
         }catch (Exception e) {
             e.printStackTrace();
         }
-
+        return false;
     }
     public Map<Long, Singer> mapListSinger(){
         return userDAO.mapListSinger();

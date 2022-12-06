@@ -86,6 +86,7 @@
         <div class="container">
             <div class="row">
                 <h3 style="font-family: sans-serif">Bài hát</h3>
+                <p style="color: red;"><c:out value="${notify}"/></p>
                 <div id="information">
                     <table class="table table-hover" style="margin-top:30px">
                         <tr>
@@ -132,7 +133,7 @@
                                 <td class="col-sm-7">
                                     <table class="table table-borderless">
                                         <c:forEach items="${listSongPlayList}" var="s">
-                                            <c:if test="${mapPlayListDetail.get(s.getId()) == p.getId()}">
+                                            <c:if test="${mapPlayListDetail.get(p.getId()*10+s.getId()) == p.getId()}">
                                                 <tr>
                                                     <td class="col-sm-3"></td>
                                                     <td class="col-sm-6"><a href="audioPlayer/audioPlayer.jsp" onclick="playAudio
@@ -236,11 +237,11 @@
                 <h5 class="modal-title" id="exampleModalLabel3">Mua bài hát</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <form action="${pageContext.request.contextPath}/UserServlet?action=addSongToPlayList" method="post">
+            <form action="${pageContext.request.contextPath}/UserServlet?action=buySong" method="post">
                 <div class="modal-body">
                     <input name="songId" id="songId1" hidden>
                     <select class="form-select" aria-label="Default select example" name="playListId">
-                        <c:forEach items="${listPlayListUser}" var="playlist">
+                        <c:forEach items="${listPlayList}" var="playlist">
                             <option value="${playlist.getId()}"><c:out value="${playlist.getName()}"/></option>
                         </c:forEach>
                     </select>

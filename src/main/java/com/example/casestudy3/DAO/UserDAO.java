@@ -25,7 +25,7 @@ public class UserDAO {
     private final String INSERT_PLAYLIST = "insert into playlist (name,date,userId) value ( ? , ? , ? );";
     private final String USER_BY_SONG = "update users set wallet = ? where id = ?;";
     private final String SINGER_SELL_SONG = "update singer set income = ? where id = ?;";
-    private final String INSERT_PLAYLISTDETAIL = "insert into playlistdetail (playlistId,songID,date) value ( ? , ? , ? );";
+    private final String INSERT_PLAYLISTDETAIL = "insert into playlistdetail (playlistId,songID,date,status) value ( ? , ? , ? , 1 );";
     private final String SELECT_USER_PLAYLIST = "select p.id, p.name, p.date \n" +
                                                 "from users u join playlist p on u.id = p.userId\n" +
                                                 "where u.id = ? ;";
@@ -46,7 +46,7 @@ public class UserDAO {
     private final String SELECT_PLAYLIST = "select * from playlistdetail where status = 1;";
     private final String UPDATE_WALLET = "update users set wallet = ? where id = ?;";
     private final String SELECT_ALL_SINGERS = "select * from singer where status = 1;";
-    private final String SELECT_PLAYLISTDETAIL = "select * from playlistdetail where status = 1;";
+    private final String SELECT_PLAYLISTDETAIL = "select * from playlistdetail dtl join song s on dtl.songId = s.id where dtl.status = 1 and s.status = 1;";
     private final String SELECT_SONG_BY_PLAYLIST =  "select s.id as id, s.name  as name, s.link as link, s.description as description," +
                                                     " s.price as price, s.singerId as singerId, s.status as status \n" +
                                                     "from singer join song s on singer.id = s.singerId\n" +
@@ -131,9 +131,10 @@ public class UserDAO {
         try (PreparedStatement statement = connection.prepareStatement(SELECT_PLAYLISTDETAIL)){
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()){
-                long PlaylistId = resultSet.getLong("PlaylistId");
-                long SongId = resultSet.getLong("SongId");
-                mapPlayListDetail.put(SongId,PlaylistId);
+                long playlistId = resultSet.getLong("playlistId");
+                long songId = resultSet.getLong("id");
+                long id = playlistId*10 + songId;
+                mapPlayListDetail.put(id,playlistId);
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -155,12 +156,12 @@ public class UserDAO {
         return songs;
     }
     // Tao album cua user
-    public boolean createPlayList(Playlist playlist){
+    public void createPlayList(Playlist playlist){
         try (PreparedStatement preparedStatement = connection.prepareStatement(INSERT_PLAYLIST)){
             preparedStatement.setString(1,playlist.getName());
             preparedStatement.setDate(2,playlist.getDate());
             preparedStatement.setLong(3,playlist.getUserId());
-            return preparedStatement.executeUpdate()>0;
+            preparedStatement.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -285,11 +286,11 @@ public class UserDAO {
         }
         return playlistDetails;
     }
-    public void recharge(long userId, double wallet){
+    public boolean recharge(long userId, double wallet){
         try(PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_WALLET)){
             preparedStatement.setDouble(1, wallet);
             preparedStatement.setLong(2, userId);
-            preparedStatement.executeUpdate();
+            return preparedStatement.executeUpdate()>0;
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

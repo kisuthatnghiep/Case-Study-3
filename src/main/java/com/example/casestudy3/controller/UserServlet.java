@@ -76,9 +76,9 @@ public class UserServlet extends HttpServlet {
     }
     private void userBuySong(HttpServletRequest request,HttpServletResponse response) throws IOException, ServletException {
         if (userService.buySong(request)){
-            response.sendRedirect("homeUser");
+            response.sendRedirect("/UserServlet");
         }else {
-            RequestDispatcher requestDispatcher = request.getRequestDispatcher("homeUser");
+            RequestDispatcher requestDispatcher = request.getRequestDispatcher("/UserServlet");
             request.setAttribute("notify","Buy failed, because you don't have enough money");
             requestDispatcher.forward(request, response);
         }
@@ -117,9 +117,18 @@ public class UserServlet extends HttpServlet {
             e.printStackTrace();
         }
     }
-    private void recharge(HttpServletRequest request,HttpServletResponse response) throws SQLException, IOException {
-        userService.recharge(request);
-        response.sendRedirect("/UserServlet?action=detailUser");
+    private void recharge(HttpServletRequest request,HttpServletResponse response) throws SQLException, IOException, ServletException {
+        RequestDispatcher requestDispatcher = request.getRequestDispatcher("user/detail_user/detail_user.jsp");
+        request.setAttribute("user",userService.detailUser(request));
+        request.setAttribute("listSongUser",userService.listSongByUser());
+        request.setAttribute("listPlayListUser",userService.findPlaylistUser());
+        request.setAttribute("sumPrice",userService.sumPriceBuySongUser());
+        if (userService.recharge(request)){
+
+        }else {
+            request.setAttribute("notify","Recharge failed");
+        }
+        requestDispatcher.forward(request, response);
     }
     private void searchSongDetail(HttpServletRequest request,HttpServletResponse response) throws  IOException, ServletException {
         RequestDispatcher requestDispatcher = request.getRequestDispatcher("homeUser.jsp");

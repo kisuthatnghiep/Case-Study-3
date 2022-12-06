@@ -120,6 +120,7 @@
                   <div class="mb-3">
                     <label for="disabledTextInput" class="form-label">Ví</label>
                     <input type="text" id="disabledTextInput" class="form-control" value="${user.getWallet()} (USD)">
+                    <p style="color: red;"><c:out value="${notify}"/></p>
                   </div>
                 </fieldset>
               </div>

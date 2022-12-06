@@ -142,7 +142,7 @@
                         <td><a href="audioPlayer/audioPlayer.jsp" onclick="playAudio('${song.getName()}','${song.getLink()}')"><c:out value="${song.getName()}"/></a></td>
                         <td><c:out value="${song.getDescription()}"/></td>
                         <td><c:out value="${song.getPrice()}"/></td>
-                        <td><a href="#"><i class="bi bi-trash" data-bs-toggle="modal" data-bs-target="#delete" onclick="referenceDelete(${song.getId()})"></i></a></td>
+                        <td><a href="#"><i class="bi bi-trash" data-bs-toggle="modal" data-bs-target="#delete" onclick="referenceDeleteSong(${song.getId()})"></i></a></td>
                     </tr>
                 </c:forEach>
             </table>
@@ -264,16 +264,16 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h1 class="modal-title fs-5" id="exampleModalLabel">Confirm</h1>
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Xác nhận</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                Are you sure want to delete?
+                Bạn có chắc chắn muốn xóa bài hát không?
             </div>
             <div class="modal-footer" id="delete-parameter">
-                <a href="SingerServlet?action=delete" onclick="location.href=(this.href+'&id='+b);return false;" id="a">
-                    <button type="button" class="btn btn-primary">Yes</button></a>
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
+                <a href="SingerServlet?action=delete" onclick="location.href=(this.href+'&id='+song);return false;" id="a">
+                    <button type="button" class="btn btn-primary">Xác nhận</button></a>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy bỏ</button>
             </div>
         </div>
     </div>

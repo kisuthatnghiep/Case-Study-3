@@ -1,6 +1,7 @@
 package com.example.casestudy3.controller;
 
 import com.example.casestudy3.DAO.AdminDAO;
+import com.example.casestudy3.service.admin.AdminService;
 import com.example.casestudy3.service.login.LoginService;
 
 import javax.servlet.*;
@@ -12,6 +13,7 @@ import java.io.IOException;
 public class LogInServlet extends HttpServlet {
     private LoginService loginService = new LoginService();
     private AdminDAO adminDAO = new AdminDAO();
+    private AdminService adminService = new AdminService();
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String action = request.getParameter("action");
@@ -43,6 +45,8 @@ public class LogInServlet extends HttpServlet {
         RequestDispatcher requestDispatcher ;
         switch (loginService.logIn(request)){
             case 1:  requestDispatcher = request.getRequestDispatcher("homeAdmin.jsp");
+                request.setAttribute("totalPrice",adminService.totalPrice());
+                request.setAttribute("listSinger",adminService.findAllSinger());
                 requestDispatcher.forward(request,response);
             break;
             case 2:  requestDispatcher = request.getRequestDispatcher("UserServlet");

@@ -1,19 +1,42 @@
 package com.example.casestudy3.model;
 
+import java.time.LocalDate;
+import java.sql.Date;
+
 public class Playlist {
     private long id;
     private String name;
-    private String avatar;
+    private Date date;
     private long userId;
 
     public Playlist() {
     }
 
-    public Playlist(long id, String name, String avatar, long userId) {
+    public Playlist(long id, String name, Date date, long userId) {
         this.id = id;
         this.name = name;
-        this.avatar = avatar;
+        this.date = date;
         this.userId = userId;
+    }
+
+    public Playlist(long id, String name, Date date) {
+        this.id = id;
+        this.name = name;
+        this.date = date;
+    }
+
+    public Playlist(String name, Date date, long userId) {
+        this.name = name;
+        this.date = date;
+        this.userId = userId;
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
     }
 
     public long getId() {
@@ -30,14 +53,6 @@ public class Playlist {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public String getAvatar() {
-        return avatar;
-    }
-
-    public void setAvatar(String avatar) {
-        this.avatar = avatar;
     }
 
     public long getUserId() {

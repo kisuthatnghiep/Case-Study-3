@@ -2,6 +2,7 @@ package com.example.casestudy3.DAO;
 
 import com.example.casestudy3.connection.MyConnection;
 import com.example.casestudy3.model.Singer;
+import com.example.casestudy3.model.Song;
 import com.example.casestudy3.model.User;
 
 import java.sql.Connection;
@@ -13,11 +14,23 @@ import java.util.List;
 
 public class AdminDAO {
     private Connection connection;
-    private final String SELECT_ALL_USERS = "select * from users where status = 1;";
-    private final String SELECT_ALL_SINGERS = "select * from singer where status = 2;";
-
+    private UserDAO userDAO;
+    private final String SELECT_ALL_USERS = "select * from users ;";
+    private final String SELECT_ALL_SINGERS = "select * from singer ;";
+    private final String TOTAL_PRICE = "select sum(singer.income) as totalPrice\n" +
+                                        "from singer ;";
+    private final String DELETE_SINGER = "update singer set status = 0 where id = ? ;";
+    private final String SUM_PRICE_BY_DATE = "select sum(singer.income) as sumPrice\n" +
+                                            "from singer join song s p on singer.id = s.singerId \n" +
+                                            "join playlistdetail dtl on s.id = dtl.songId \n" +
+                                            "group by month(dtl.date) = ? and year(dtl.date) = ? ;";
+    private final String SUM_PRICE_BY_YEAR = "select sum(singer.income) as sumPrice\n" +
+                                            "from singer join song s p on singer.id = s.singerId \n" +
+                                            "join playlistdetail dtl on s.id = dtl.songId \n" +
+                                            "group by year(dtl.date) = ? ;";
     public AdminDAO() {
         connection = MyConnection.getConnection();
+        userDAO = new UserDAO();
     }
     public List<User> findAllUser() {
         List<User> users = new ArrayList<User>();
@@ -75,4 +88,68 @@ public class AdminDAO {
         }
         return null;
     }
+    public Singer findByNameSinger(String name) {
+        for (Singer s : findAllSinger()){
+            if (s.getName().equals(name)){
+                return s;
+            }
+        }
+        return null;
+    }
+    public Song findByIdSong(long id) {
+        for (Song s : userDAO.findAllSong()){
+            if (s.getId() == id){
+                return s;
+            }
+        }
+        return null;
+    }
+    public double totalPrice(){
+        double totalPrice = 0;
+        try(PreparedStatement preparedStatement = connection.prepareStatement( TOTAL_PRICE)){
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()){
+                totalPrice += resultSet.getDouble("totalPrice");
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return  totalPrice;
+    }
+    public double sumPriceByDate(String month, String year){
+        double sumPrice = 0;
+        try(PreparedStatement preparedStatement = connection.prepareStatement(SUM_PRICE_BY_DATE)){
+            preparedStatement.setString(1, month);
+            preparedStatement.setString(2, year);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()){
+                sumPrice += resultSet.getDouble("sumPrice");
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return  sumPrice;
+    }
+    public double sumPriceByYear(String year){
+        double sumPrice = 0;
+        try(PreparedStatement preparedStatement = connection.prepareStatement(SUM_PRICE_BY_YEAR)){
+            preparedStatement.setString(1, year);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()){
+                sumPrice += resultSet.getDouble("sumPrice");
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return  sumPrice;
+    }
+    public boolean deleteSingerByAdmin(long singerId){
+        try(PreparedStatement preparedStatement = connection.prepareStatement(DELETE_SINGER)){
+            preparedStatement.setLong(1,singerId);
+            return preparedStatement.executeUpdate() > 0;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
 }

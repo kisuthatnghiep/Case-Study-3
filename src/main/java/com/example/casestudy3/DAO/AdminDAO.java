@@ -13,8 +13,8 @@ import java.util.List;
 
 public class AdminDAO {
     private Connection connection;
-    private final String SELECT_ALL_USERS = "select * from users ;";
-    private final String SELECT_ALL_SINGERS = "select * from singer ;";
+    private final String SELECT_ALL_USERS = "select * from users where status = 1;";
+    private final String SELECT_ALL_SINGERS = "select * from singer where status = 2;";
 
     public AdminDAO() {
         connection = MyConnection.getConnection();

@@ -27,6 +27,7 @@ public class UserServlet extends HttpServlet {
         switch (action){
             case "detailUser": detailUser(request,response); break;
             case "deleteSongUser": deleteSongUser(request,response); break;
+
             default: homeUser(request,response);
 
         }
@@ -111,14 +112,14 @@ public class UserServlet extends HttpServlet {
     private void addSongToPlayList(HttpServletRequest request,HttpServletResponse response) throws  SQLException {
         try {
             userService.addSongToPlayList(request);
-            response.sendRedirect("");
+            response.sendRedirect("/UserServlet?action=detailUser");
         }catch (Exception e) {
             e.printStackTrace();
         }
     }
     private void recharge(HttpServletRequest request,HttpServletResponse response) throws SQLException, IOException {
         userService.recharge(request);
-        response.sendRedirect("");
+        response.sendRedirect("/UserServlet?action=detailUser");
     }
     private void searchSongDetail(HttpServletRequest request,HttpServletResponse response) throws  IOException, ServletException {
         RequestDispatcher requestDispatcher = request.getRequestDispatcher("homeUser.jsp");

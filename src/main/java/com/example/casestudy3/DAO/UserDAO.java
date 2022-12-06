@@ -131,8 +131,8 @@ public class UserDAO {
         try (PreparedStatement statement = connection.prepareStatement(SELECT_PLAYLISTDETAIL)){
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()){
-                long SongId = resultSet.getLong("songId");
-                long PlaylistId = resultSet.getLong("playlistId");
+                long PlaylistId = resultSet.getLong("PlaylistId");
+                long SongId = resultSet.getLong("SongId");
                 mapPlayListDetail.put(SongId,PlaylistId);
             }
         } catch (SQLException e) {

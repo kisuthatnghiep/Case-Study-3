@@ -37,7 +37,7 @@
       </div>
       <div class="col-md-6 avatar vertical">
         <div class="input-group">
-          <form action="${pageContext.request.contextPath}/UserServlet?action=searchDtail" method="post" style="width: 620px">
+          <form action="${pageContext.request.contextPath}/UserServlet?action=searchDetail" method="post" style="width: 620px">
           <input class="form-control border-end-0 border" type="search" name="search" placeholder="Tìm kiếm" id="example-search-input">
           </form>
           <span class="input-group-append">
@@ -50,6 +50,7 @@
       <div class="col-md-3 vertical signIn">
         <a id="avatar" href=""><c:out value="${user.getName()}"/></a>
         <img src="../../sourcePicture/keeng_ver5_02.png"/>
+        <a href="http://localhost:8080/login/login.jsp">Đăng xuất</a>
       </div>
     </div>
   </div>
@@ -123,8 +124,11 @@
                 </fieldset>
               </div>
               <div class="col-12">
-                <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                  Tạo Play List</button>
+                <button style="margin-right: 10px" type="button" class="btn btn-primary" data-bs-toggle="modal"
+                        data-bs-target="#exampleModal">
+                  Tạo PlayList</button>
+                <a class="btn btn-primary" data-bs-toggle="modal" href="#exampleModalToggle"
+                     role="button">Nạp tiền</a>
               </div>
             </form>
           </div>
@@ -141,8 +145,6 @@
               <tr>
                 <td><c:out value="${dtl.getName()}"/></td>
                 <td><c:out value="${dtl.getDate()}"/></td>
-                <td><a href="#"><i class="bi bi-trash" data-bs-toggle="modal" data-bs-target="#delete"
-                                   style="font-size:20px " onclick="referenceDelete(${dtl.getId()})"></i></a></td>
               </tr>
             </c:forEach>
           </table>
@@ -166,13 +168,12 @@
                   <c:out value="${song.getName()}"/></a></td>
                 <td><c:out value="${song.getDescription()}"/></td>
                 <td><c:out value="${song.getPrice()}"/></td>
-                <td><a href="#"><i class="bi bi-file-earmark-plus" data-bs-toggle="modal" data-bs-target="#delete"
-                                   style="font-size:20px " onclick="referenceDelete(${song.getId()})"></i></a></td>
+                <td><a href="#"><i class="bi bi-file-earmark-plus"  data-bs-toggle="modal" data-bs-target="#addToPlaylist"
+                                   style="font-size:20px " onclick="referenceDeleteSongUser(${song.getId()})"></i></a></td>
               </tr>
             </c:forEach>
           </table>
           <div class="col-12">
-
           </div>
         </div>
       </div>
@@ -204,6 +205,28 @@
     </div>
   </div>
 </div>
+<%--modal nap tien--%>
+<div class="modal fade" id="exampleModalToggle" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title" id="exampleModalToggleLabel" style="text-align: center">Nạp Tiền</h4>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <form action="${pageContext.request.contextPath}/UserServlet?action=recharge" method="post">
+        <div class="modal-body">
+          <input style="font-size: 20px;width: 400px" type="number" name="wallet"
+                 placeholder="Số tiền bạn muốn nạp">&emsp;<c:out value="USD"/>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-primary" type="submit">Nạp</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<%--modal xoa playlist--%>
+
 
 <div id="footer">
   <div id="footer-top">
@@ -276,6 +299,34 @@
     </div>
   </div>
 </div>
+<script src="referenceDeleteSongUser.js"></script>
+
+<%--modal add song to playlist--%>
+<div class="modal fade" id="addToPlaylist" tabindex="-1" aria-labelledby="exampleModalLabel2" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel2">Thêm vào Playlist</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <form action="${pageContext.request.contextPath}/UserServlet?action=addSongToPlayList" method="post">
+        <div class="modal-body">
+          <input name="songId" id="songId" hidden>
+          <select class="form-select" aria-label="Default select example" name="playListId">
+            <c:forEach items="${listPlayListUser}" var="playlist">
+              <option value="${playlist.getId()}"><c:out value="${playlist.getName()}"/></option>
+            </c:forEach>
+          </select>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-primary">Xác nhận</button>
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy bỏ</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<script src="user/detail_user/referenceDeleteSongUser.js"></script>
 </body>
 </html>
 

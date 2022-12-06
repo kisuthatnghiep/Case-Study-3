@@ -79,6 +79,28 @@
             </div>
         </div>
     </div>
+    <div id="main-content">
+        <div class="container">
+            <div class="row">
+                <div id="information">
+                    <h3>Danh sách ca sĩ</h3>
+                    <table class="table table-hover" style="margin-top: 30px">
+                        <tr>
+                            <th>Tài khoản</th>
+                            <th>Họ và tên</th>
+                            <th>Email</th>
+                            <th>Số điện thoại</th>
+                            <th>Thu nhập</th>
+                            <th></th>
+                        </tr>
+                        <c:forEach items="" var="">
+
+                        </c:forEach>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
 <div id="footer">

@@ -117,7 +117,9 @@ public class UserService {
     public void recharge(HttpServletRequest request) {
         try {
             double wallet = Double.parseDouble(request.getParameter("wallet"));
-             userDAO.recharge(loginService.checkOnline(), wallet);
+            User user = adminDAO.findByIdUser(loginService.checkOnline());
+            wallet += user.getWallet();
+            userDAO.recharge(loginService.checkOnline(), wallet);
         }catch (Exception e) {
             e.printStackTrace();
         }

@@ -19,6 +19,7 @@ public class Playlist {
         this.userId = userId;
     }
 
+
     public Playlist(long id, String name, Date date) {
         this.id = id;
         this.name = name;

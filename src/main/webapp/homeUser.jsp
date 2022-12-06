@@ -21,7 +21,7 @@
     <div class="container">
         <div class="row" style="padding: 10px;height: 75px">
             <div class="col-md-1 vertical">
-                <a href=""><img src="sourcePicture/logo_keeng.png" style="margin-top: 6px"/></a>
+                <a href="#"><img src="sourcePicture/logo_keeng.png" style="margin-top: 6px"/></a>
             </div>
             <div class="col-md-2 vertical" id="menu">
                 <ul id="nav">
@@ -111,7 +111,7 @@
                                     <td><c:out value="${listMapSinger.get(song.getSingerId()).getName()}"/></td>
                                     <td><c:out value="${song.getDescription()}"/></td>
                                     <td><c:out value="${song.getPrice()}"/></td>
-                                    <td><c:out value="Đã mua"/></td>
+                                    <td><i class="bi bi-check2-square"></i></td>
                                 </tr>
                             </c:if>
                         </c:forEach>
@@ -133,16 +133,16 @@
                                     <table class="table table-borderless">
                                         <c:forEach items="${listSongPlayList}" var="s">
                                             <c:if test="${mapPlayListDetail.get(s.getId()) == p.getId()}">
-                                            <tr>
-                                                <td class="col-sm-3"></td>
-                                                <td class="col-sm-6"><a href="audioPlayer/audioPlayer.jsp" onclick="playAudio
-                                                        ('${listMapSongPlayList.get(s.getId()).getName()}',
-                                                        '${listMapSongPlayList.get(s.getId()).getLink()}')">
-                                                    <c:out value="${listMapSongPlayList.get(s.getId()).getName()}"/></a><br>
-                                                    <p style="font-size: smaller"><c:out value="${listMapSinger.get(s.getSingerId()).getName()}"/></p>
-                                                </td>
-                                                <td class="col-sm-3"><a href="#"><i class="bi bi-trash" ></i></a></td>
-                                            </tr>
+                                                <tr>
+                                                    <td class="col-sm-3"></td>
+                                                    <td class="col-sm-6"><a href="audioPlayer/audioPlayer.jsp" onclick="playAudio
+                                                            ('${listMapSongPlayList.get(s.getId()).getName()}',
+                                                            '${listMapSongPlayList.get(s.getId()).getLink()}')">
+                                                        <c:out value="${listMapSongPlayList.get(s.getId()).getName()}"/></a><br>
+                                                        <p style="font-size: smaller"><c:out value="${listMapSinger.get(s.getSingerId()).getName()}"/></p>
+                                                    </td>
+                                                    <td class="col-sm-3"><a href="#"><i class="bi bi-trash" ></i></a></td>
+                                                </tr>
                                             </c:if>
                                         </c:forEach>
                                     </table>

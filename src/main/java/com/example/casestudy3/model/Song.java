@@ -31,6 +31,21 @@ public class Song {
         this.status = status;
     }
 
+    public Song(long id, String name, String description, double price) {
+        this.id = id;
+        this.name = name;
+        this.description = description;
+        this.price = price;
+    }
+
+    public Song(long id, String name, String link, String description, double price) {
+        this.id = id;
+        this.name = name;
+        this.link = link;
+        this.description = description;
+        this.price = price;
+    }
+
     public long getId() {
         return id;
     }

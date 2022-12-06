@@ -33,7 +33,9 @@ public class Singer {
         this.income = income;
         this.status = status;
     }
-
+    public Singer(String name){
+        this.name = name;
+    }
     public long getId() {
         return id;
     }

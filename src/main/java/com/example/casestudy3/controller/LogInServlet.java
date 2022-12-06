@@ -8,18 +8,22 @@ import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 import java.io.IOException;
 
-@WebServlet(name = "LogInServlet", value = "/LogInServlet")
+@WebServlet(name = "LogInServlet", value = "/login")
 public class LogInServlet extends HttpServlet {
-    private LoginService loginService;
-    private AdminDAO adminDAO;
-    @Override
-    public void init()  {
-        adminDAO = new AdminDAO();
-        loginService = new LoginService();
-    }
+    private LoginService loginService = new LoginService();
+    private AdminDAO adminDAO = new AdminDAO();
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+        String action = request.getParameter("action");
+        if (action == null) {
+            action = "";
+        }
+        switch (action) {
+            case "login":
+                goHome(request, response);
+                break;
+            default: response.sendRedirect("login/login.jsp");
+        }
     }
 
     @Override
@@ -39,16 +43,18 @@ public class LogInServlet extends HttpServlet {
         RequestDispatcher requestDispatcher ;
         switch (loginService.logIn(request)){
             case 1:  requestDispatcher = request.getRequestDispatcher("homeAdmin.jsp");
-                     break;
-            case 2:  requestDispatcher = request.getRequestDispatcher("homeUser.jsp");
+                requestDispatcher.forward(request,response);
+            break;
+            case 2:  requestDispatcher = request.getRequestDispatcher("UserServlet");
                      request.setAttribute("user",adminDAO.findByIdUser(loginService.checkOnline()));
-                     break;
-            case 3:  requestDispatcher = request.getRequestDispatcher("homeSinger.jsp");
+                    requestDispatcher.forward(request,response);
+            break;
+            case 3:  requestDispatcher = request.getRequestDispatcher("SingerServlet");
                      request.setAttribute("singer",adminDAO.findByIdSinger(loginService.checkOnline()));
-                     break;
-            default: requestDispatcher = request.getRequestDispatcher("login.jsp");
+                requestDispatcher.forward(request,response);
+            break;
+            default: response.sendRedirect("http://localhost:8080/login/login.jsp");
         }
-        requestDispatcher.forward(request,response);
-    }
 
+    }
 }

@@ -41,6 +41,7 @@ a{
     position: absolute;
     background-color: #FFFFFF;
     box-shadow: 0 0 10px rgba(0,0,0,0.3);
+    z-index: 10;
 }
 #nav .subnav a{
     color: #000000;
@@ -71,9 +72,6 @@ ul.subnav{
 #footer{
     background-color: #858d90;
 }
-#content{
-    height: 800px;
-}
 .center{
     padding: 20px;
 
@@ -98,14 +96,27 @@ ul.subnav{
 }
 #slider{
     padding-top: 20px;
+    padding-bottom: 20px;
+    position: relative;
+}
+#main-content{
+    background-color: rgb(235, 235, 235);
+}
+.song-list{
+    margin-top: 20px;
+    margin-bottom:20px;
+    background-color: white;
+}
+#information{
+    margin-top: 20px;
+    margin-bottom:20px;
+    background-color: white;
+}
+#main-content h3{
+    margin-top: 30px
+}
+#info-form{
+    margin-top: 20px;
+    margin-bottom: 20px;
 }
 
-#table_detail{
-    margin: 20px;
-}
-tbody, td, tfoot, th, thead, tr {
-    border-color: inherit;
-    border-style: solid;
-    border-width: 0;
-    padding: 20px;
-}

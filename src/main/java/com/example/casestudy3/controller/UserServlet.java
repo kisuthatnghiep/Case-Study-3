@@ -106,13 +106,13 @@ public class UserServlet extends HttpServlet {
         informationHomeUser(request);
         requestDispatcher.forward(request, response);
     }
-    private void addSongToPlayList(HttpServletRequest request,HttpServletResponse response) throws  SQLException {
+    private void addSongToPlayList(HttpServletRequest request,HttpServletResponse response) throws SQLException, IOException {
         try {
             userService.addSongToPlayList(request);
-            response.sendRedirect("/UserServlet?action=detailUser");
         }catch (Exception e) {
             e.printStackTrace();
         }
+        response.sendRedirect("/UserServlet?action=detailUser");
     }
     private void recharge(HttpServletRequest request,HttpServletResponse response) throws SQLException, IOException, ServletException {
         RequestDispatcher requestDispatcher = request.getRequestDispatcher("user/detail_user/detail_user.jsp");

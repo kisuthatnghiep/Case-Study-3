@@ -264,6 +264,7 @@ public class UserDAO {
     }
     public boolean recharge(long userId, double wallet){
         try(PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_WALLET)){
+            connection.setAutoCommit(true);
             preparedStatement.setDouble(1, wallet);
             preparedStatement.setLong(2, userId);
             return preparedStatement.executeUpdate()>0;

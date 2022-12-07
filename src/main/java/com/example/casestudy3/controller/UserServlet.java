@@ -119,9 +119,7 @@ public class UserServlet extends HttpServlet {
     }
     private void recharge(HttpServletRequest request,HttpServletResponse response) throws SQLException, IOException, ServletException {
         RequestDispatcher requestDispatcher = request.getRequestDispatcher("user/detail_user/detail_user.jsp");
-        if (userService.recharge(request)){
-
-        }else {
+        if (!userService.recharge(request)){
             request.setAttribute("notify","Recharge failed");
         }
         request.setAttribute("user",userService.detailUser(request));

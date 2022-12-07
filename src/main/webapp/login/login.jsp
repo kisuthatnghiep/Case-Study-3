@@ -35,10 +35,12 @@
                 <h2>Đăng nhập</h2>
             </header>
             <br>
+
+            </p>
             <div class="field-set">
                 <span class="input-item">
            <i class="fa fa-user-circle"></i>
-         </span>
+                </span>
                 <input class="form-input" id="txt-input" type="text" name="account" placeholder="Tài Khoản">
                 <p class="text-danger m-0 p-0" style="font-size: 14px"><c:if test="${not empty messageLoginAccount}">
                     <c:out value="${messageLoginAccount}"/>
@@ -47,8 +49,8 @@
                 </p>
                 <br>
                 <span class="input-item">
-        <i class="fa fa-key"></i>
-       </span>
+                    <i class="fa fa-key"></i>
+                </span>
                 <input class="form-input" type="password" placeholder="Mật Khẩu" id="pwd"  name="password">
                 <p class="text-danger m-0 p-0" style="font-size: 14px"><c:if test="${not empty messageLoginPassword}">
                     <c:out value="${messageLoginPassword}"/>
@@ -59,13 +61,19 @@
                 <button class="log-in"> Đăng nhập </button>
             </div>
             <div class="other">
-                <button class="btn submits frgt-pass" style="margin-top: 9px">Chưa có tài khoản?</button>
+                <button class="btn submits frgt-pass" style="margin-top: 9px">Quên mật khẩu ?</button>
                 <a href="http://localhost:8080/register/register.jsp" style="text-decoration: none;color:black">
                     <button type="button" class="btn submits" style="margin-top: 10px">Đăng ký
                         <i class="fa fa-user-plus" aria-hidden="true"></i>
                     </button></a>
             </div>
         </div>
+        <div class="con" style="margin-top: 20px">
+            <p class="text-success m-0 p-0" style="font-size: 20px; font-family: 'Playfair Display', serif;">
+                <c:if test="${not empty messageRegister}">
+                <c:out value="${messageRegister}"/>
+                <c:set var="messageRegister" value="" scope="session"/>
+            </c:if></div>
     </form>
 </div>
 <%--Footer--%>

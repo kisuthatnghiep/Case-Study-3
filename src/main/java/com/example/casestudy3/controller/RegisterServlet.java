@@ -87,10 +87,12 @@ public class RegisterServlet extends HttpServlet {
         } else if (role.equals("singer")) {
             Singer newSinger = new Singer(name, account, password, telephone, email, 0, 1);
             registerDAO.createSinger(newSinger);
+            session.setAttribute("messageRegister", "Tạo tài khoản thành công!!!");
             response.sendRedirect("http://localhost:8080/login/login.jsp");
         } else {
             User newUser = new User(name, account, password, telephone, email, 0, 1);
             registerDAO.createUser(newUser);
+            session.setAttribute("messageRegister", "Tạo tài khoản thành công!!!");
             response.sendRedirect("http://localhost:8080/login/login.jsp");
         }
     }

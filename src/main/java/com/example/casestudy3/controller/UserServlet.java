@@ -78,7 +78,7 @@ public class UserServlet extends HttpServlet {
             response.sendRedirect("/UserServlet");
         }else {
             RequestDispatcher requestDispatcher = request.getRequestDispatcher("homeUser.jsp");
-            request.setAttribute("notify","Buy failed");
+            request.setAttribute("notify","Mua thất bại !!!");
             request.setAttribute("listSong", userService.findAllSong());
             informationHomeUser(request);
             requestDispatcher.forward(request, response);

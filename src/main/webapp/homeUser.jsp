@@ -108,7 +108,11 @@
                             </c:if>
                             <c:if test="${song.getStatus() == -1}">
                                 <tr>
-                                    <td><c:out value="${song.getName()}"/></td>
+                                    <td><a href="audioPlayer/audioPlayer.jsp" onclick="playAudio
+                                                ('${song.getName()}',
+                                                '${song.getLink()}')">
+                                            <c:out value="${song.getName()}"/></a>
+                                    </td>
                                     <td><c:out value="${listMapSinger.get(song.getSingerId()).getName()}"/></td>
                                     <td><c:out value="${song.getDescription()}"/></td>
                                     <td><c:out value="${song.getPrice()}"/></td>

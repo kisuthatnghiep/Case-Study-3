@@ -294,7 +294,6 @@
     document.getElementById('formGroupExampleInput').onchange = function() {
         localStorage.setItem('selectedtem', document.getElementById('formGroupExampleInput').value);
     };
-
     if (localStorage.getItem('selectedtem')) {
         document.getElementById(localStorage.getItem('selectedtem')).selected = true;
     }

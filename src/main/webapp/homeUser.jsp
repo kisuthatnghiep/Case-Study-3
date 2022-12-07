@@ -262,20 +262,21 @@
 <div class="modal fade" id="deleteFromPlaylist" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
-            <div class="modal-header">
-                <h1 class="modal-title fs-5" id="exampleModalLabel">Xác nhận</h1>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <input type="text" id="playlistId" hidden>
-                <input type="text" id="songDeleteId" hidden>
-                Bạn có chắc chắn muốn xóa bài hát khỏi playlist không?
-            </div>
-            <div class="modal-footer" id="delete-parameter">
-                <a href="AdminServlet?action=deleteSinger" onclick="location.href=(this.href+'&singerId='+singer);return false;" id="a">
-                    <button type="button" class="btn btn-primary">Xác nhận</button></a>
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy bỏ</button>
-            </div>
+            <form action="${pageContext.request.contextPath}/UserServlet?action=deleteSongToPlayList" method="post">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Xác nhận</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <input type="text" id="playlistId" name="playListId" hidden>
+                    <input type="text" id="songDeleteId" name="songId" hidden>
+                    Bạn có chắc chắn muốn xóa bài hát khỏi playlist không?
+                </div>
+                <div class="modal-footer" id="delete-parameter">
+                    <button type="submit" class="btn btn-primary">Xác nhận</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy bỏ</button>
+                </div>
+            </form>
         </div>
     </div>
 </div>

@@ -26,8 +26,6 @@ public class UserServlet extends HttpServlet {
         }
         switch (action){
             case "detailUser": detailUser(request,response); break;
-            case "deleteSongUser": deleteSongUser(request,response); break;
-
             default: homeUser(request,response);
 
         }
@@ -58,6 +56,7 @@ public class UserServlet extends HttpServlet {
                     throw new RuntimeException(e);
                 }
                 break;
+            case "deleteSongToPlayList": deleteSongToPlayList(request,response); break;
             default: homeUser(request,response);
         }
     }
@@ -105,10 +104,6 @@ public class UserServlet extends HttpServlet {
         informationHomeUser(request);
         requestDispatcher.forward(request, response);
     }
-    private void deleteSongUser(HttpServletRequest request,HttpServletResponse response) throws IOException {
-        userService.deleteSongUser(request);
-        response.sendRedirect("/UserServlet");
-    }
     private void addSongToPlayList(HttpServletRequest request,HttpServletResponse response) throws  SQLException {
         try {
             userService.addSongToPlayList(request);
@@ -133,5 +128,9 @@ public class UserServlet extends HttpServlet {
         request.setAttribute("listSong",  userService.searchSongDetail(request));
         informationHomeUser(request);
         requestDispatcher.forward(request, response);
+    }
+    private void deleteSongToPlayList(HttpServletRequest request,HttpServletResponse response) throws IOException {
+        userService.deleteSongToPlayList(request);
+        response.sendRedirect("/UserServlet");
     }
 }

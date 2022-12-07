@@ -91,11 +91,6 @@ public class UserService {
     public double sumPriceBuySongUser()  {
         return userDAO.sumPriceBuySongUser(loginService.checkOnline());
     }
-    public void deleteSongUser(HttpServletRequest request)  {
-        long playListId =  Long.parseLong(request.getParameter("playListId"));
-        long songId = Long.parseLong(request.getParameter("id"));
-        userDAO.deleteSongByPlayList(playListId,songId);
-    }
     public void addSongToPlayList(HttpServletRequest request) throws SQLException {
         boolean flag = true;
         List<PlaylistDetail> PlaylistDetails = userDAO.findAllPlayListDetail();
@@ -133,5 +128,10 @@ public class UserService {
     public List<Song> searchSongDetail(HttpServletRequest request) {
         String search = request.getParameter("search");
         return userDAO.searchSongDetail(search,loginService.checkOnline());
+    }
+    public void deleteSongToPlayList(HttpServletRequest request){
+        long playListId =  Long.parseLong(request.getParameter("playListId"));
+        long songId = Long.parseLong(request.getParameter("songId"));
+        userDAO.deleteSongToPlayList(songId,playListId);
     }
 }

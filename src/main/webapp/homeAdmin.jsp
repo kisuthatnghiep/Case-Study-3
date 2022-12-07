@@ -133,9 +133,9 @@
                         <div class="d-inline-block" style="width: 30%; margin-left: 10px">
                             <label for="formGroupExampleInput1" class="form-label">Năm</label>
                             <select class="form-select" name="year" aria-label="Default select example" id="formGroupExampleInput1">
-                                <option value="2022">2022</option>
-                                <option value="2021">2021</option>
-                                <option value="2020">2020</option>
+                                <option id="2022" value="2022">2022</option>
+                                <option id="2021"value="2021">2021</option>
+                                <option id="2020"value="2020">2020</option>
                             </select>
                         </div>
                         <div class="d-inline-block" style="width: 30%; margin-left: 10px">
@@ -296,6 +296,13 @@
     };
     if (localStorage.getItem('selectedtem')) {
         document.getElementById(localStorage.getItem('selectedtem')).selected = true;
+    }
+
+    document.getElementById('formGroupExampleInput1').onchange = function() {
+        localStorage.setItem('selectedtem1', document.getElementById('formGroupExampleInput1').value);
+    };
+    if (localStorage.getItem('selectedtem1')) {
+        document.getElementById(localStorage.getItem('selectedtem1')).selected = true;
     }
 </script>
 </body>

@@ -1,6 +1,6 @@
-let song = '';
+let song1 = '';
 function referenceDeleteSong(id) {
-    song = id;
+    song1 = id;
 }
 
 

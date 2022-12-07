@@ -271,7 +271,7 @@
                 Bạn có chắc chắn muốn xóa bài hát không?
             </div>
             <div class="modal-footer" id="delete-parameter">
-                <a href="SingerServlet?action=delete" onclick="location.href=(this.href+'&id='+song);return false;" id="a">
+                <a href="SingerServlet?action=delete" onclick="location.href=(this.href+'&id='+song1);return false;" id="a">
                     <button type="button" class="btn btn-primary">Xác nhận</button></a>
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy bỏ</button>
             </div>

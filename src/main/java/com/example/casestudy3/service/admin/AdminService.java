@@ -18,7 +18,7 @@ public class AdminService {
        return adminDAO.findAllSinger();
     }
     public double totalPrice(){
-        return adminDAO.totalPrice()/0.8;
+        return adminDAO.totalPrice();
     }
     public boolean deleteSinger(HttpServletRequest request){
         long singerId = Long.parseLong(request.getParameter("singerId"));
@@ -27,10 +27,14 @@ public class AdminService {
     public double sumPriceByDate(HttpServletRequest request){
         String month = request.getParameter("month");
         String year = request.getParameter("year");
+        if (month == null || year == null){
+            month = "0";
+            year = "0";
+        }
         if  (month.equals("0")){
-            return adminDAO.sumPriceByYear(year)/0.8;
+            return adminDAO.sumPriceByYear(year);
         }else {
-            return adminDAO.sumPriceByDate(month, year)/0.8;
+            return adminDAO.sumPriceByDate(month, year);
         }
     }
 }

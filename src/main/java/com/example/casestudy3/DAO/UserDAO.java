@@ -42,7 +42,7 @@ public class UserDAO {
                                                 "join song s on dtl.songId = s.id\n" +
                                                 "where u.id = ?\n" +
                                                 "group by s.id;";
-    private final String DELETE_SONG_TO_PLAYLIST = "update playlistdetail set status = 0 where playlistId = ? & songId = ?;";
+    private final String DELETE_SONG_TO_PLAYLIST = "update playlistdetail set status = 0 where playlistId = ? and songId = ?;";
     private final String SELECT_PLAYLIST = "select * from playlistdetail where status = 1;";
     private final String UPDATE_WALLET = "update users set wallet = ? where id = ?;";
     private final String SELECT_ALL_SINGERS = "select * from singer where status = 1;";
@@ -293,8 +293,8 @@ public class UserDAO {
     }
     public void deleteSongToPlayList(Long songId, Long playlistId) {
         try(PreparedStatement preparedStatement = connection.prepareStatement(DELETE_SONG_TO_PLAYLIST)){
-            preparedStatement.setLong(1,songId);
-            preparedStatement.setLong(2,playlistId);
+            preparedStatement.setLong(1,playlistId);
+            preparedStatement.setLong(2,songId);
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();

@@ -17,17 +17,15 @@ public class AdminDAO {
     private UserDAO userDAO;
     private final String SELECT_ALL_USERS = "select * from users where status = 1;";
     private final String SELECT_ALL_SINGERS = "select * from singer where status = 1;";
-    private final String TOTAL_PRICE = "select sum(singer.income) as totalPrice\n" +
-                                        "from singer ;";
+    private final String TOTAL_PRICE = "select sum(price) as totalPrice\n" +
+                                        "from song join playlistdetail on song.id = playlistdetail.songid;";
     private final String DELETE_SINGER = "update singer set status = 0 where id = ? ;";
-    private final String SUM_PRICE_BY_DATE = "select sum(singer.income) as sumPrice\n" +
-                                            "from singer join song s on singer.id = s.singerId \n" +
-                                            "join playlistdetail dtl on s.id = dtl.songId \n" +
-                                            "group by month(dtl.date) = ? and year(dtl.date) = ? ;";
-    private final String SUM_PRICE_BY_YEAR = "select sum(singer.income) as sumPrice\n" +
-                                            "from singer join song s on singer.id = s.singerId \n" +
-                                            "join playlistdetail dtl on s.id = dtl.songId \n" +
-                                            "group by year(dtl.date) = ? ;";
+    private final String SUM_PRICE_BY_DATE = "select sum(price) as sumPrice from song\n" +
+            "join playlistdetail on song.id = playlistdetail.songid\n" +
+            "where year(playlistdetail.date) = ? and month(playlistdetail.date) = ?;";
+    private final String SUM_PRICE_BY_YEAR = "select sum(price) as sumPrice from song\n" +
+            "join playlistdetail on song.id = playlistdetail.songid\n" +
+            "where year(playlistdetail.date) = ?;";
     public AdminDAO() {
         connection = MyConnection.getConnection();
         userDAO = new UserDAO();
@@ -112,21 +110,21 @@ public class AdminDAO {
                 totalPrice += resultSet.getDouble("totalPrice");
             }
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
         }
         return  totalPrice;
     }
     public double sumPriceByDate(String month, String year){
         double sumPrice = 0;
         try(PreparedStatement preparedStatement = connection.prepareStatement(SUM_PRICE_BY_DATE)){
-            preparedStatement.setString(1, month);
-            preparedStatement.setString(2, year);
+            preparedStatement.setString(1, year);
+            preparedStatement.setString(2, month);
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()){
                 sumPrice += resultSet.getDouble("sumPrice");
             }
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
         }
         return  sumPrice;
     }
@@ -135,11 +133,11 @@ public class AdminDAO {
         try(PreparedStatement preparedStatement = connection.prepareStatement(SUM_PRICE_BY_YEAR)){
             preparedStatement.setString(1, year);
             ResultSet resultSet = preparedStatement.executeQuery();
-            while (resultSet.next()){
+            while (resultSet.next())
                 sumPrice += resultSet.getDouble("sumPrice");
-            }
+
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
         }
         return  sumPrice;
     }

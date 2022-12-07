@@ -56,7 +56,7 @@ public class UserServlet extends HttpServlet {
                     throw new RuntimeException(e);
                 }
                 break;
-            case "deleteSongToPlayList": deleteSongToPlayList(request,response); break;vhdgyu
+            case "deleteSongToPlayList": deleteSongToPlayList(request,response); break;
             default: homeUser(request,response);
         }
     }
@@ -114,8 +114,8 @@ public class UserServlet extends HttpServlet {
     }
     private void recharge(HttpServletRequest request,HttpServletResponse response) throws SQLException, IOException, ServletException {
         RequestDispatcher requestDispatcher = request.getRequestDispatcher("user/detail_user/detail_user.jsp");
-        if (!userService.recharge(request)) {
-            request.setAttribute("notify", "Recharge failed");
+        if (!userService.recharge(request)){
+            request.setAttribute("notify","Recharge failed");
         }
         request.setAttribute("user",userService.detailUser(request));
         request.setAttribute("listSongUser",userService.listSongByUser());

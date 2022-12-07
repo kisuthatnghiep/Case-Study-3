@@ -47,8 +47,7 @@
               <span class="input-group-text px-4 bg-white justify-content-center" style="width: 70px">
                 <i class="fa fa-user text-muted"></i>
               </span>
-                <input type="text" class="form-control" placeholder="Tài khoản (tối thiểu 6 kí tự)" name="account"
-                required="required">
+                <input type="text" class="form-control" placeholder="Tài khoản (tối thiểu 6 kí tự)" name="account">
               </div>
               <p class="text-danger m-0 p-0" style="font-size: 14px"><c:if test="${not empty messageAccount}">
                 <c:out value="${messageAccount}"/>

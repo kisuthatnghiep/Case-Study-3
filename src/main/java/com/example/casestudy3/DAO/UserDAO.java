@@ -42,7 +42,7 @@ public class UserDAO {
                                                 "join song s on dtl.songId = s.id\n" +
                                                 "where u.id = ?\n" +
                                                 "group by s.id;";
-    private final String DELETE_SONG_PLAYLIST = "update playlistdetail set status = 0 where playlistId = ? & songId = ?;";
+    private final String DELETE_SONG_TO_PLAYLIST = "update playlistdetail set status = 0 where playlistId = ? & songId = ?;";
     private final String SELECT_PLAYLIST = "select * from playlistdetail where status = 1;";
     private final String UPDATE_WALLET = "update users set wallet = ? where id = ?;";
     private final String SELECT_ALL_SINGERS = "select * from singer where status = 1;";
@@ -64,7 +64,6 @@ public class UserDAO {
                                             "where (p.name  = ? or s.name like concat('%',?,'%'))\n" +
                                             "and (singer.status = 1 and u.id = ?)\n"+
                                             "group by s.id; ";
-
     public UserDAO() {
         connection =  MyConnection.getConnection();
     }
@@ -166,20 +165,6 @@ public class UserDAO {
             throw new RuntimeException(e);
         }
     }
-//    public boolean userBuySong(double wallet,long id) throws SQLException {
-//        try (PreparedStatement preparedStatement = connection.prepareStatement(USER_BY_SONG)){
-//            preparedStatement.setDouble(1,wallet);
-//            preparedStatement.setLong(2,id);
-//            return preparedStatement.executeUpdate()>0;
-//        }
-//    }
-//    public boolean singerSellSong(double income,long id) throws SQLException {
-//        try (PreparedStatement preparedStatement = connection.prepareStatement(SINGER_SELL_SONG)){
-//            preparedStatement.setDouble(1,income);
-//            preparedStatement.setLong(2,id);
-//            return preparedStatement.executeUpdate()>0;
-//        }
-//    }
     public void addPlayList(long playListId,long songId) throws SQLException {
         try (PreparedStatement preparedStatement = connection.prepareStatement(INSERT_PLAYLISTDETAIL)){
             preparedStatement.setLong(1,playListId);
@@ -261,15 +246,6 @@ public class UserDAO {
         }
         return sumPrice;
     }
-    public void deleteSongByPlayList(long playlistId, long songId){
-        try (PreparedStatement preparedStatement = connection.prepareStatement(DELETE_SONG_PLAYLIST)){
-            preparedStatement.setLong(1,playlistId);
-            preparedStatement.setLong(2,songId);
-            preparedStatement.executeUpdate();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
     public List<PlaylistDetail> findAllPlayListDetail() {
         List<PlaylistDetail> playlistDetails = new ArrayList<>();
         try (PreparedStatement preparedStatement = connection.prepareStatement(SELECT_PLAYLIST)){
@@ -314,6 +290,15 @@ public class UserDAO {
             throw new RuntimeException(e);
         }
         return singers;
+    }
+    public void deleteSongToPlayList(Long songId, Long playlistId) {
+        try(PreparedStatement preparedStatement = connection.prepareStatement(DELETE_SONG_TO_PLAYLIST)){
+            preparedStatement.setLong(1,songId);
+            preparedStatement.setLong(2,playlistId);
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     private static void addListSong(List<Song> songs, ResultSet resultSet) throws SQLException {

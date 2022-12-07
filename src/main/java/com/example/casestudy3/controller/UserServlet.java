@@ -26,8 +26,6 @@ public class UserServlet extends HttpServlet {
         }
         switch (action){
             case "detailUser": detailUser(request,response); break;
-            case "deleteSongUser": deleteSongUser(request,response); break;
-
             default: homeUser(request,response);
 
         }
@@ -58,6 +56,7 @@ public class UserServlet extends HttpServlet {
                     throw new RuntimeException(e);
                 }
                 break;
+            case "deleteSongToPlayList": deleteSongToPlayList(request,response); break;vhdgyu
             default: homeUser(request,response);
         }
     }
@@ -105,10 +104,6 @@ public class UserServlet extends HttpServlet {
         informationHomeUser(request);
         requestDispatcher.forward(request, response);
     }
-    private void deleteSongUser(HttpServletRequest request,HttpServletResponse response) throws IOException {
-        userService.deleteSongUser(request);
-        response.sendRedirect("/UserServlet");
-    }
     private void addSongToPlayList(HttpServletRequest request,HttpServletResponse response) throws  SQLException {
         try {
             userService.addSongToPlayList(request);
@@ -119,15 +114,13 @@ public class UserServlet extends HttpServlet {
     }
     private void recharge(HttpServletRequest request,HttpServletResponse response) throws SQLException, IOException, ServletException {
         RequestDispatcher requestDispatcher = request.getRequestDispatcher("user/detail_user/detail_user.jsp");
+        if (!userService.recharge(request)) {
+            request.setAttribute("notify", "Recharge failed");
+        }
         request.setAttribute("user",userService.detailUser(request));
         request.setAttribute("listSongUser",userService.listSongByUser());
         request.setAttribute("listPlayListUser",userService.findPlaylistUser());
         request.setAttribute("sumPrice",userService.sumPriceBuySongUser());
-        if (userService.recharge(request)){
-
-        }else {
-            request.setAttribute("notify","Recharge failed");
-        }
         requestDispatcher.forward(request, response);
     }
     private void searchSongDetail(HttpServletRequest request,HttpServletResponse response) throws  IOException, ServletException {
@@ -135,5 +128,9 @@ public class UserServlet extends HttpServlet {
         request.setAttribute("listSong",  userService.searchSongDetail(request));
         informationHomeUser(request);
         requestDispatcher.forward(request, response);
+    }
+    private void deleteSongToPlayList(HttpServletRequest request,HttpServletResponse response) throws IOException {
+        userService.deleteSongToPlayList(request);
+        response.sendRedirect("/UserServlet");
     }
 }

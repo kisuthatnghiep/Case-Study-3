@@ -28,9 +28,9 @@ public class AdminService {
         String month = request.getParameter("month");
         String year = request.getParameter("year");
         if  (month.equals("0")){
-            return adminDAO.sumPriceByYear(year)/0.8;
+            return adminDAO.sumPriceByYear(year);
         }else {
-            return adminDAO.sumPriceByDate(month, year)/0.8;
+            return adminDAO.sumPriceByDate(month, year);
         }
     }
 }

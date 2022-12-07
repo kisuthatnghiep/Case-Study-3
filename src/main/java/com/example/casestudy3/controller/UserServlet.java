@@ -77,8 +77,10 @@ public class UserServlet extends HttpServlet {
         if (userService.buySong(request)){
             response.sendRedirect("/UserServlet");
         }else {
-            RequestDispatcher requestDispatcher = request.getRequestDispatcher("/UserServlet");
-            request.setAttribute("notify","Buy failed, because you don't have enough money");
+            RequestDispatcher requestDispatcher = request.getRequestDispatcher("homeUser.jsp");
+            request.setAttribute("notify","Buy failed");
+            request.setAttribute("listSong", userService.findAllSong());
+            informationHomeUser(request);
             requestDispatcher.forward(request, response);
         }
     }

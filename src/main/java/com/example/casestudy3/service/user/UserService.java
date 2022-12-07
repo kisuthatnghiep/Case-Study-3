@@ -38,13 +38,16 @@ public class UserService {
     public boolean buySong(HttpServletRequest request)  {
         try {
             long songId = Long.parseLong(request.getParameter("songId"));
-            long playListId = Long.parseLong(request.getParameter("playListId"));
-            Song song = adminDAO.findByIdSong(songId);
-            Singer singer = adminDAO.findByIdSinger(song.getSingerId());
-            Long userId = loginService.checkOnline();
-            double wallet = adminDAO.findByIdUser(userId).getWallet() - song.getPrice();
-            double income = (singer.getIncome() + song.getPrice()*0.8);
-            return userDAO.buySong(wallet,income,playListId,userId, singer.getId(), songId);
+            String text = request.getParameter("playListId");
+            if(text != null) {
+                long playListId = Long.parseLong(text);
+                Song song = adminDAO.findByIdSong(songId);
+                Singer singer = adminDAO.findByIdSinger(song.getSingerId());
+                Long userId = loginService.checkOnline();
+                double wallet = adminDAO.findByIdUser(userId).getWallet() - song.getPrice();
+                double income = (singer.getIncome() + song.getPrice()*0.8);
+                return userDAO.buySong(wallet,income,playListId,userId, singer.getId(), songId);
+            }
         }catch (Exception e){
             e.printStackTrace();
         }

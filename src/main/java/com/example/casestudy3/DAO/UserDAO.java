@@ -75,7 +75,7 @@ public class UserDAO {
                 addListSong(songs, resultSet);
             }
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
         }
         return songs;
     }
@@ -94,7 +94,7 @@ public class UserDAO {
                 songs.put(id,new Song(id, name,link,description,price,singerId,status ));
             }
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+          e.printStackTrace();
         }
         return songs;
     }
@@ -106,7 +106,7 @@ public class UserDAO {
                addListSong(songs, resultSet);
             }
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
         }
         return songs;
     }
@@ -121,7 +121,7 @@ public class UserDAO {
                 addListSong(songs, resultSet);
             }
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
         }
         return songs;
     }
@@ -136,7 +136,7 @@ public class UserDAO {
                 mapPlayListDetail.put(id,playlistId);
             }
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
         }
         return mapPlayListDetail;
     }
@@ -150,7 +150,7 @@ public class UserDAO {
                 addListSong(songs, resultSet);
             }
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
         }
         return songs;
     }
@@ -162,7 +162,7 @@ public class UserDAO {
             preparedStatement.setLong(3,playlist.getUserId());
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
         }
     }
     public void addPlayList(long playListId,long songId) throws SQLException {
@@ -216,7 +216,7 @@ public class UserDAO {
             }
 
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
         }
         return playList;
     }
@@ -229,7 +229,7 @@ public class UserDAO {
                 addListSong(songs, resultSet);
             }
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
         }
         return songs;
     }
@@ -242,7 +242,7 @@ public class UserDAO {
                 sumPrice += resultSet.getDouble("sumPrice") ;
             }
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
         }
         return sumPrice;
     }
@@ -258,7 +258,7 @@ public class UserDAO {
                 playlistDetails.add(new PlaylistDetail(songId, playListId,date,status));
             }
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
         }
         return playlistDetails;
     }
@@ -268,8 +268,9 @@ public class UserDAO {
             preparedStatement.setLong(2, userId);
             return preparedStatement.executeUpdate()>0;
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
         }
+        return false;
     }
     public Map<Long,Singer> mapListSinger(){
         Map<Long,Singer> singers = new HashMap<>();
@@ -287,7 +288,7 @@ public class UserDAO {
                 singers.put(id,new Singer(id, name,account,password,phone,email,income,status ));
             }
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
         }
         return singers;
     }

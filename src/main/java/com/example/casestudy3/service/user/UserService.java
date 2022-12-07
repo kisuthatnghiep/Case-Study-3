@@ -43,7 +43,7 @@ public class UserService {
             Singer singer = adminDAO.findByIdSinger(song.getSingerId());
             Long userId = loginService.checkOnline();
             double wallet = adminDAO.findByIdUser(userId).getWallet() - song.getPrice();
-            double income = (singer.getIncome() + song.getPrice())*0.8;
+            double income = (singer.getIncome() + song.getPrice()*0.8);
             return userDAO.buySong(wallet,income,playListId,userId, singer.getId(), songId);
         }catch (Exception e){
             e.printStackTrace();

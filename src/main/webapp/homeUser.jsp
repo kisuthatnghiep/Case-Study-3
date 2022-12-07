@@ -108,7 +108,11 @@
                             </c:if>
                             <c:if test="${song.getStatus() == -1}">
                                 <tr>
-                                    <td><c:out value="${song.getName()}"/></td>
+                                    <td><a href="audioPlayer/audioPlayer.jsp" onclick="playAudio
+                                                ('${song.getName()}',
+                                                '${song.getLink()}')">
+                                            <c:out value="${song.getName()}"/></a>
+                                    </td>
                                     <td><c:out value="${listMapSinger.get(song.getSingerId()).getName()}"/></td>
                                     <td><c:out value="${song.getDescription()}"/></td>
                                     <td><c:out value="${song.getPrice()}"/></td>
@@ -142,7 +146,7 @@
                                                         <c:out value="${listMapSongPlayList.get(s.getId()).getName()}"/></a><br>
                                                         <p style="font-size: smaller"><c:out value="${listMapSinger.get(s.getSingerId()).getName()}"/></p>
                                                     </td>
-                                                    <td class="col-sm-3"><a href="#"><i class="bi bi-trash" ></i></a></td>
+                                                    <td class="col-sm-3"><a href="#"><i class="bi bi-trash" data-bs-toggle="modal" data-bs-target="#deleteFromPlaylist" onclick="deleteFromPlaylist('${p.getId()}','${listMapSongPlayList.get(s.getId()).getId()}')"></i></a></td>
                                                 </tr>
                                             </c:if>
                                         </c:forEach>
@@ -251,6 +255,27 @@
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy bỏ</button>
                 </div>
             </form>
+        </div>
+    </div>
+</div>
+<!-- Modal delete song from playlist-->
+<div class="modal fade" id="deleteFromPlaylist" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Xác nhận</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <input type="text" id="playlistId" hidden>
+                <input type="text" id="songDeleteId" hidden>
+                Bạn có chắc chắn muốn xóa bài hát khỏi playlist không?
+            </div>
+            <div class="modal-footer" id="delete-parameter">
+                <a href="AdminServlet?action=deleteSinger" onclick="location.href=(this.href+'&singerId='+singer);return false;" id="a">
+                    <button type="button" class="btn btn-primary">Xác nhận</button></a>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy bỏ</button>
+            </div>
         </div>
     </div>
 </div>

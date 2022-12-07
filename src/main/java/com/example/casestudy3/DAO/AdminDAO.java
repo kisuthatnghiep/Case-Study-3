@@ -17,8 +17,8 @@ public class AdminDAO {
     private UserDAO userDAO;
     private final String SELECT_ALL_USERS = "select * from users where status = 1;";
     private final String SELECT_ALL_SINGERS = "select * from singer where status = 1;";
-    private final String TOTAL_PRICE = "select sum(singer.income) as totalPrice\n" +
-                                        "from singer ;";
+    private final String TOTAL_PRICE = "select sum(price) as totalPrice\n" +
+                                        "from song join playlistdetail on song.id = playlistdetail.songid;";
     private final String DELETE_SINGER = "update singer set status = 0 where id = ? ;";
     private final String SUM_PRICE_BY_DATE = "select sum(price) as sumPrice from song\n" +
             "join playlistdetail on song.id = playlistdetail.songid\n" +
@@ -110,7 +110,7 @@ public class AdminDAO {
                 totalPrice += resultSet.getDouble("totalPrice");
             }
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
         }
         return  totalPrice;
     }

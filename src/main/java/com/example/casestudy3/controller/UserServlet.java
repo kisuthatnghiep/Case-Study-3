@@ -119,15 +119,13 @@ public class UserServlet extends HttpServlet {
     }
     private void recharge(HttpServletRequest request,HttpServletResponse response) throws SQLException, IOException, ServletException {
         RequestDispatcher requestDispatcher = request.getRequestDispatcher("user/detail_user/detail_user.jsp");
+        if (!userService.recharge(request)){
+            request.setAttribute("notify","Recharge failed");
+        }
         request.setAttribute("user",userService.detailUser(request));
         request.setAttribute("listSongUser",userService.listSongByUser());
         request.setAttribute("listPlayListUser",userService.findPlaylistUser());
         request.setAttribute("sumPrice",userService.sumPriceBuySongUser());
-        if (userService.recharge(request)){
-
-        }else {
-            request.setAttribute("notify","Recharge failed");
-        }
         requestDispatcher.forward(request, response);
     }
     private void searchSongDetail(HttpServletRequest request,HttpServletResponse response) throws  IOException, ServletException {

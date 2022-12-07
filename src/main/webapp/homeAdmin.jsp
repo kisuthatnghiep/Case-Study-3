@@ -290,5 +290,15 @@
     </div>
 </div>
 <script src="actionDeleteSinger.js"></script>
+<script type="text/javascript">
+    document.getElementById('formGroupExampleInput').onchange = function() {
+        localStorage.setItem('selectedtem', document.getElementById('formGroupExampleInput').value);
+    };
+
+    if (localStorage.getItem('selectedtem')) {
+        document.getElementById(localStorage.getItem('selectedtem')).selected = true;
+    }
+</script>
 </body>
 </html>
+
